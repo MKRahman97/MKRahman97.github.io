@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>My Website</title>
+    <link rel="stylesheet" href="website/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+<header class="header">
+    <a href="#" class="logo"> M. K. Rahman</a>
+
+    <div class="bx bx-menu" id="menu-icon"></div>
+
+    <nav class="navbar">
+        <a href="#home" class="active">Home</a>
+        <a href="#about">About</a>
+        <a href="#education">Education </a>
+        <a href="#skills">Skills </a>
+        <a href="#contact">Contact</a>
+        <span class="active-nav"></span>
+    </nav>
+</header>
+
+<section class="home" id="home">
+    <div class="home-content">
+        <h1>
+            Hi, I'm <span> Mohammed Rahman </span>
+        </h1>
+        <h3>
+            Python Programmer
+        </h3>
+        <p>
+            Just submitted a PhD in chemistry to the University of Warwick, and here are some of my skills.
+        </p>
+        <div class="btn-box">
+            <a href="Images/CV_MR_29Jan24.pdf" download="Mohammed-Rahman-CV.pdf">Download CV</a>
+        </div>
+    </div>
+
+    <div class="home-sci">
+        <a href="https://www.linkedin.com/in/mohammed-k-rahman/" target="_blank"><i class='bx bxl-linkedin'></i></a>
+        <a href="https://twitter.com/3statesMatter" target="_blank"><i class='bx bxl-twitter'></i></a>
+        <a href="mailto:mkrahman9707@gmail.com?subject=Enquiry from website&body=Dear Mohammed Rahman,"><i
+                class='bx bxs-envelope'></i></a>
+    </div>
+
+    <div class="home-img">
+        <img src="Images/Present.jpeg" align="right">
+    </div>
+
+
+</section>
+
+<!--    about section -->
+<section class="about" id="about">
+    <h2 class="heading">About <span>Me</span></h2>
+    <div class="about-img">
+        <img src="Images/peakdist.jpg" alt="">
+        <span class="circle-spin"></span>
+    </div>
+    <div class="about-content">
+        <h3>Python Programmer</h3>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas vitae scel<span id="dots">...</span><span id="more">erisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa. Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, sed ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta.</span>
+
+        </p>
+
+        <div class="btn-box btns">
+            <a onclick="myFunction()" class="btn" id="readmore"> Read More</a>
+        </div>
+    </div>
+
+
+</section>
+
+<!--    education section-->
+<section class="education" id="education">
+    <h2 class="heading">My <span>Journey</span></h2>
+    <div class="education-row">
+        <div class="education-column">
+            <h3 class="title">Education</h3>
+            <div class="education-box">
+                <div class="education-content">
+                    <div class="content">
+                        <div class="year"><i class='bx bxs-calendar'></i>2015-2019</div>
+                        <h3>BSc - University of Surrey</h3>
+                        <p>First Class Honors in Chemistry.</p>
+                    </div>
+                </div>
+
+                <div class="education-content">
+                    <div class="content">
+                        <div class="year"><i class='bx bxs-calendar'></i>2019-2020</div>
+                        <h3>MSc - University of Warwick</h3>
+                        <p>Distinction in Analytical Chemistry.</p>
+                    </div>
+                </div>
+
+                <div class="education-content">
+                    <div class="content">
+                        <div class="year"><i class='bx bxs-calendar'></i>2020-2024</div>
+                        <h3>PhD - University of Warwick</h3>
+                        <p>PhD in the department of Chemistry and Physics.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="education-column">
+            <h3 class="title">Experience</h3>
+            <div class="education-box">
+
+                <div class="education-content">
+                    <div class="content">
+                        <div class="year"><i class='bx bxs-calendar'></i>2019</div>
+                        <h3>Research Assistant - Superdielectrics Ltd</h3>
+                        <p>Managed a laboratory, testing new biodegradeable supercapacitors.</p>
+                    </div>
+                </div>
+
+                <div class="education-content">
+                    <div class="content">
+                        <div class="year"><i class='bx bxs-calendar'></i>2020-2023</div>
+                        <h3>Data Analyst - University of Warwick</h3>
+                        <p>Automated data analysis for scientific data using python. Created GUIs and </p>
+                    </div>
+                </div>
+
+
+                <div class="education-content">
+                    <div class="content">
+                        <div class="year"><i class='bx bxs-calendar'></i>2023-2024</div>
+                        <h3>Bioinformatician - Bioinformatics Research Technology Platform</h3>
+                        <p>Front-end developer for the enterobase databse.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!--skills section-->
+
+<section class="skills" id="skills">
+    <h2 class="heading">My <span>Skills</span></h2>
+
+    <div class="skills-row">
+        <div class="skills-column">
+            <h3 class="title">Coding Skills</h3>
+
+            <div class="skills-box">
+                <div class="skills-content">
+
+                    <div class="progress">
+                        <h3>HTML <span>50%</span></h3>
+                        <div class="bar"><span></span></div>
+                    </div>
+
+                    <div class="progress">
+                        <h3>CSS <span>40%</span></h3>
+                        <div class="bar"><span></span></div>
+                    </div>
+
+                    <div class="progress">
+                        <h3>JavaScript <span>30%</span></h3>
+                        <div class="bar"><span></span></div>
+                    </div>
+
+                    <div class="progress">
+                        <h3>Python <span>90%</span></h3>
+                        <div class="bar"><span></span></div>
+                    </div>
+
+                    <div class="progress">
+                        <h3>R <span>65%</span></h3>
+                        <div class="bar"><span></span></div>
+                    </div>
+
+                    <div class="progress">
+                        <h3>Bash <span>42%</span></h3>
+                        <div class="bar"><span></span></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="skills-column">
+            <h3 class="title">Professional Skills</h3>
+
+            <div class="skills-box">
+                <div class="skills-content">
+
+                    <div class="progress">
+                        <h3>Data Analysis <span>90%</span></h3>
+                        <div class="bar"><span></span></div>
+                    </div>
+
+                    <div class="progress">
+                        <h3>Data Science <span>60%</span></h3>
+                        <div class="bar"><span></span></div>
+                    </div>
+
+                    <div class="progress">
+                        <h3>Data Visualisation <span>75%</span></h3>
+                        <div class="bar"><span></span></div>
+                    </div>
+
+                    <div class="progress">
+                        <h3>Back-end development <span>30%</span></h3>
+                        <div class="bar"><span></span></div>
+                    </div>
+
+                    <div class="progress">
+                        <h3>Statistics <span>67%</span></h3>
+                        <div class="bar"><span></span></div>
+                    </div>
+
+                    <div class="progress">
+                        <h3>Reports <span>95%</span></h3>
+                        <div class="bar"><span></span></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!--contact section-->
+
+<section class="contact" id="contact">
+    <h2 class="heading">Contact <span>Me</span></h2>
+
+    <form action="#" name="submit-to-google-sheet">
+        <div class="input-box">
+            <div class="input-field">
+                <input type="text" name="Name" placeholder="Full Name" required>
+                <span class="focus"></span>
+            </div>
+            <div class="input-field">
+                <input type="email" name="Email" placeholder="Email Address" required>
+                <span class="focus"></span>
+            </div>
+        </div>
+
+        <div class="input-box">
+            <div class="input-field">
+                <input type="number" name="Number" placeholder="Mobile Number" required>
+                <span class="focus"></span>
+            </div>
+            <div class="input-field">
+                <input type="text" name="Subject" placeholder="Email Subject" required>
+                <span class="focus"></span>
+            </div>
+        </div>
+
+        <div class="textarea-field">
+            <textarea name="Message" id="" cols="30" rows="10" placeholder="Your Message" required></textarea>
+            <span class="focus"></span>
+        </div>
+
+        <div class="btn-box btns">
+            <button type="submit" class="btn">Submit</button>
+        </div>
+    </form>
+
+    <span id="msg"></span>
+
+</section>
+
+<!--footer section-->
+<footer class="footer">
+    <div class="footer-iconTop">
+        <a href="#"><i class='bx bx-chevron-up-circle'></i></a>
+    </div>
+
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

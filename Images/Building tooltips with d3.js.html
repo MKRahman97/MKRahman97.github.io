@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)https://d3-graph-gallery.com/graph/interactivity_tooltip.html -->
+<html lang="en"><link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><link type="text/css" rel="stylesheet" id="dark-mode-general-link"><style lang="en" type="text/css" id="dark-mode-custom-style"></style><style lang="en" type="text/css" id="dark-mode-native-style"></style><style lang="en" type="text/css" id="dark-mode-native-sheet"></style><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- AdThrive Head Tag Manual -->
+<script type="text/javascript" async="" src="./Building tooltips with d3.js_files/analytics.js"></script><script type="text/javascript" async="" src="./Building tooltips with d3.js_files/js"></script><script async="" src="./Building tooltips with d3.js_files/ads.min.js"></script><script data-no-optimize="1" data-cfasync="false">
+(function(w, d) {
+	w.adthrive = w.adthrive || {};
+	w.adthrive.cmd = w.
+	adthrive.cmd || [];
+	w.adthrive.plugin = 'adthrive-ads-manual';
+	w.adthrive.host = 'ads.adthrive.com';var s = d.createElement('script');
+	s.async = true;
+	s.referrerpolicy='no-referrer-when-downgrade';
+	s.src = 'https://' + w.adthrive.host + '/sites/643436a4e6d20859e40a446b/ads.min.js?referrer=' + w.encodeURIComponent(w.location.href) + '&cb=' + (Math.floor(Math.random() * 100) + 1);
+	var n = d.getElementsByTagName('script')[0];
+	n.parentNode.insertBefore(s, n);
+})(window, document);
+</script>
+<!-- End of AdThrive Head Tag -->
+
+
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+  <script async="" src="./Building tooltips with d3.js_files/js(1)"></script>
+
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-79254642-6');
+    </script>
+
+    
+    <title>Building tooltips with d3.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="How to add tooltips on a d3.js plot: setting up, customizing, positioning and more. Explanation and reproducible code.">
+    <meta name="keywords" content="Data,Dataviz,Datavisualization,Javascript, JS, d3.js, axis, x, y">
+    <meta name="author" content="Yan Holtz">
+  <link rel="icon" href="https://d3-graph-gallery.com/img/logo/D3_single_small.png">
+
+    <meta property="og:title" content="Building tooltips with d3.js">
+    <meta property="og:image" content="img/overview_RGG.png">
+    <meta property="og:description" content="How to add tooltips on a d3.js plot: setting up, customizing, positioning and more. Explanation and reproducible code.">
+
+    <!-- Bootstrap core CSS -->
+    <link href="./Building tooltips with d3.js_files/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="./Building tooltips with d3.js_files/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="./Building tooltips with d3.js_files/agency.css" rel="stylesheet">
+
+    <!-- PRISM -->
+    <script src="./Building tooltips with d3.js_files/prism.js"></script><style>undefined</style>
+    <link href="./Building tooltips with d3.js_files/prism.css" rel="stylesheet">
+
+    <!-- D3.JS v4 -->
+    <script src="./Building tooltips with d3.js_files/d3.v4.js"></script>
+    <script src="./Building tooltips with d3.js_files/d3-scale-chromatic.v1.min.js"></script>
+
+    <!-- JQUERY -->
+    <script src="./Building tooltips with d3.js_files/jquery.min.js"></script>
+
+    <!-- HTML TO CANVAS -->
+    <script src="./Building tooltips with d3.js_files/html2canvas.js"></script>
+
+    <!-- Function to parse html and js code chunks made by Yan Holtz -->
+    <script src="./Building tooltips with d3.js_files/myParser.js"></script>
+
+    <!-- Bootstrap js -->
+    <script src="./Building tooltips with d3.js_files/bootstrap.bundle.min.js"></script>
+    <script src="./Building tooltips with d3.js_files/agency.min.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="use-credentials"><link rel="preconnect" href="https://fonts.gstatic.com/"><link rel="stylesheet" href="./Building tooltips with d3.js_files/css2"></head>
+
+
+
+  <body data-spy="scroll" data-target="#myScrollspy" data-offset="1">
+
+
+    <!-- THIS ALLOWS TO INSERT THE MENU THAT IS STORED IN A MENU.HTML FILE-->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav"><div class="container">
+  <a href="https://d3-graph-gallery.com/index.html">← D3.js Graph Gallery</a>
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    Menu
+    <i class="fa fa-bars"></i>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="navbar-nav text-uppercase ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="modal" href="https://d3-graph-gallery.com/graph/interactivity_tooltip.html#researchModal"><i class="fa fa-search"></i></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="modal" href="https://d3-graph-gallery.com/graph/interactivity_tooltip.html#LogoMenu">Chart types</a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="https://d3-graph-gallery.com/graph/interactivity_tooltip.html#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Quick
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <p class="menuTitle"><i>Basics</i></p>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="https://www.d3-graph-gallery.com/intro_d3js.html">Intro to d3</a>
+          <a class="dropdown-item" href="https://www.d3-graph-gallery.com/graph/shape.html">Shape</a>
+          <a class="dropdown-item" href="https://www.d3-graph-gallery.com/graph/basic_datamanipulation.html">Data wrangling</a>
+          <p class="menuTitle"><i>Customize</i></p>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="https://www.d3-graph-gallery.com/graph/custom_axis.html">Axis</a>
+          <a class="dropdown-item" href="https://www.d3-graph-gallery.com/graph/custom_color.html">Color</a>
+          <a class="dropdown-item" href="https://www.d3-graph-gallery.com/graph/custom_theme.html">Themes</a>
+          <a class="dropdown-item" href="https://www.d3-graph-gallery.com/graph/custom_legend.html">Legend</a>
+          <a class="dropdown-item" href="https://www.d3-graph-gallery.com/graph/custom_responsive.html">Responsiveness</a>
+          <a class="dropdown-item" href="https://www.d3-graph-gallery.com/graph/custom_annotation.html">Annotation</a>
+          <p class="menuTitle"><i>Interactivity</i></p>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="https://www.d3-graph-gallery.com/graph/interactivity_tooltip.html">Tooltip</a>
+          <a class="dropdown-item" href="https://www.d3-graph-gallery.com/graph/interactivity_button.html">Button</a>
+          <a class="dropdown-item" href="https://www.d3-graph-gallery.com/graph/interactivity_zoom.html">Zoom</a>
+          <a class="dropdown-item" href="https://www.d3-graph-gallery.com/graph/interactivity_brush.html">Brushing</a>
+          <a class="dropdown-item" href="https://www.d3-graph-gallery.com/graph/interactivity_transition.html">Transition</a>
+          <p class="menuTitle"><i>React</i></p>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="https://www.react-graph-gallery.com/">React and d3.js</a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="https://d3-graph-gallery.com/all.html">ALL</a>
+      </li>
+
+
+      <li class="nav-item">
+        <a class="nav-link js-scroll-trigger" href="https://www.react-graph-gallery.com/">React</a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="https://d3-graph-gallery.com/graph/interactivity_tooltip.html#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Related
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="https://www.data-to-viz.com/">Data to viz</a>
+          <a class="dropdown-item" href="https://www.dataviz-inspiration.com/">Dataviz inspiration</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="https://www.python-graph-gallery.com/">Python graph gallery</a>
+          <a class="dropdown-item" href="https://www.d3-graph-gallery.com/">D3.js graph gallery</a>
+          <a class="dropdown-item" href="https://www.react-graph-gallery.com/">React graph gallery</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="https://www.yan-holtz.com/">Who Am I</a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link js-scroll-trigger" href="https://d3-graph-gallery.com/about.html">About</a>
+      </li>
+    </ul>
+  </div>
+</div>
+</nav>
+    <script>
+    $(function(){
+      $("#mainNav").load("../html_chunk/menu.html");
+    });
+    </script>
+
+    <!-- THIS ALLOWS TO INSERT THE MODAL OF THE MENU THAT IS STORED IN A MENU_MODAL.HTML FILE-->
+    <div id="modal_menu_insertion"><!-- This document provide the code for 2 modals related to the menu: i/ the modal showing all chart types ii/ the search bar utility -->
+
+<!-- Modal menu: one icon per chart type with black background -->
+<div class="portfolio-modal modal fade" id="LogoMenu" tabindex="-1" role="dialog" aria-hidden="true" style="background-color: black;">
+  <div class="modal-dialog h-100 modal-dialog-centered" style="width: 80%; max-width: 917px">
+    <div class="modal-content">
+      <div class="close-modal" data-dismiss="modal" style="background-color: black;">
+        <a href="https://d3-graph-gallery.com/graph/interactivity_tooltip.html"><p style="color: white; text-align: right; font-size: 23px">✕</p></a>
+      </div>
+      <div class="container" style="background-color: black;">
+        <div class="row">
+            <div class="modal-body">
+
+               <a href="https://d3-graph-gallery.com/violin.html">
+                 <img class="img-fluid imageOfMenu imageOfMenu" src="./Building tooltips with d3.js_files/Violin150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/density.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Density150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/histogram.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Histogram150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/boxplot.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Box1150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/ridgeline.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Joyplot150.png" alt="">
+               </a>
+
+               <a href="https://d3-graph-gallery.com/scatter.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/ScatterPlot150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/heatmap">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Heatmap150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/correlogram.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Correlogram150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/bubble.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/BubblePlot150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/connectedscatter.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/ScatterConnected150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/density2d.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/2dDensity150.png" alt="">
+               </a>
+
+               <a href="https://d3-graph-gallery.com/barplot.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Bar150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/spider.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Spider150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/wordcloud.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Wordcloud150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/parallel.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Parallel1150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/lollipop.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Lollipop150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/circular_barplot.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/CircularBarplot150.png" alt="">
+               </a>
+
+               <a href="https://d3-graph-gallery.com/treemap.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Tree150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/donut.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Doughnut150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/pie.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Pie150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/dendrogram.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Dendrogram150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/circularpacking.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/CircularPacking150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/sunburst.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Sunburst150.png" alt="">
+               </a>
+
+               <a href="https://d3-graph-gallery.com/line.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Line150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/area.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Area150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/stackedarea.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/StackedArea150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/streamgraph.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Stream150.png" alt="">
+               </a>
+
+               <a href="https://d3-graph-gallery.com/backgroundmap.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Map150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/choropleth.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Choropleth150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/hexbinmap.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/MapHexbin150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/cartogram.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Cartogram150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/connection.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/ConnectedMap150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/bubblemap.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/BubbleMap150.png" alt="">
+               </a>
+
+               <a href="https://d3-graph-gallery.com/chord.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Chord150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/network.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Network150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/sankey.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Sankey150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/arc.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Arc150.png" alt="">
+               </a><a href="https://d3-graph-gallery.com/bundle.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Bundle150.png" alt="">
+               </a>
+
+              <a href="https://d3-graph-gallery.com/intro_d3js.html">
+                  <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Basic150_black.png" alt="">
+              </a>
+              <a href="https://d3-graph-gallery.com/interactivity.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/anim150.gif" alt="">
+              </a>
+              <a href="https://d3-graph-gallery.com/graph/shape.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Shapehelper150_black.png" alt="">
+              </a>
+              <a href="https://www.data-to-viz.com/caveats">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Bad150.png" alt="">
+              </a>
+              <a href="https://d3-graph-gallery.com/custom.html">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/Colours150.png" alt="">
+              </a>
+              <a href="https://www.r-graph-gallery.com/portfolio/data-art/">
+                 <img class="img-fluid imageOfMenu" src="./Building tooltips with d3.js_files/DataArt1150.png" alt="">
+              </a>
+
+              <span>X</span>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- Research Bar Modal -->
+<div class="modal fade" id="researchModal" tabindex="-1" role="dialog" aria-hidden="true" style="margin-right: 20px; margin-left: 20px">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 1000px">
+    <div class="modal-content" style="min-height: 400px">
+      <div class="close-modal" data-dismiss="modal">
+        <a href="https://d3-graph-gallery.com/graph/interactivity_tooltip.html"><p style="color: #b8b8b8; padding-right: 15px; padding-top: 5px; text-align: right; font-size: 23px">✕</p></a>
+      </div>
+      <div class="container">
+        <div class="row">
+            <div class="modal-body">
+              <!-- Project Details Go Here -->
+               <div style="margin-top: 120px; margin-bottom: 120px">
+                  <center>
+                    <input id="stringToSearch" type="text" name="usrname" value="d3.extent" style="  outline: 0; border-width: 0 0 2px; border-color: #b35900 !important;">
+                    <button id="researchSubmitButton" class="btn btn-secondary btn-md text-uppercase" type="button">Submit</button>
+                  </center>
+                </div>
+               <div id="resultSearch"></div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="./Building tooltips with d3.js_files/d3.v4.js"></script>
+<script>
+// A function that returns a list of interesting pages for the query
+function returnPages() {
+
+  // get the text that must been searched
+  var toSearch = d3.select("#stringToSearch").property("value")
+  var address = "https://api.github.com/search/code?q=%22" + toSearch + "%22+path:graph+repo:holtzy/D3-graph-gallery"
+
+  // Do the request to the gthub API
+  d3.request(address)
+    .mimeType("application/vnd.github.v3.text-match+json")
+    .response(function(xhr) {
+      var data = JSON.parse(xhr.responseText);
+
+      // Div where I add the code
+      div = d3.select("#resultSearch")
+
+      // Erase the content of the div
+      div.html("")
+
+      // If no result, display a no result message
+      if(data.items.length==0){
+        div.html("<center><p>😔<i>No result found, sorry...</i>😔</p></center>")
+      }
+
+      // For each result item, add a section
+      div
+        .selectAll("resultItems")
+        .data(data.items)
+        .enter()
+          .append("div")
+          .html(function(d){
+            // Url to redirect to
+            url = "https://www.d3-graph-gallery.com/graph/" + d.name
+
+            // Code selection: if 2 entries, keep only the second one.
+            initialCode = d.text_matches[d.text_matches.length - 1].fragment
+            cleanCode = initialCode
+              .replace("\n", "<br>")
+              .replace("<li>", "")
+              .replace(toSearch, "<span style='background-color: yellow'>"+toSearch+'</span>')
+            codeReady = "<p class='codeResearch'>....." + cleanCode + ".....</p>"
+            return ("<br><br><a href=" + url + ">&rarr; " + d.name + "</a>" + "<br>" + codeReady)
+          })
+    }).get()
+
+  }
+
+// When the submit button is triggered, run the function
+d3.select("#researchSubmitButton").on("click", returnPages);
+
+// If the 'Enter' key is pressed, trigger the function as well
+var input = document.getElementById("stringToSearch");
+input.addEventListener("keyup", function(event) {
+  event.preventDefault();
+  if (event.keyCode === 13) {
+    document.getElementById("researchSubmitButton").click();
+  }
+});
+
+</script>
+</div>
+    <script>
+    $(function(){
+      $("#modal_menu_insertion").load("../html_chunk/menu_modal.html");
+    });
+    </script>
+
+
+
+    <!-- Header -->
+    <header class="masthead" style="padding-top: 150px; padding-bottom: 80px">
+      <div class="textlanding">
+          <h1>Building tooltips with d3.js</h1>
+          <hr class="short_hr">
+          <br>
+          <ul class="list-inline social-buttons">
+            <li class="list-inline-item">
+              <a href="https://twitter.com/R_Graph_Gallery">
+                <i class="fa fa-twitter"></i>
+              </a>
+            </li>
+            <li class="list-inline-item social-buttons">
+              <a href="https://github.com/holtzy">
+                <i class="fa fa-github" style="color: white"></i>
+              </a>
+            </li>
+            <li class="list-inline-item social-buttons">
+              <a href="https://www.linkedin.com/in/yan-holtz-2477534a/">
+                <i class="fa fa-linkedin"></i>
+              </a>
+            </li>
+          </ul>
+          <br><br>
+          <p style="max-width: 700px; margin: auto">This is document gives a few insights on how to add <u>tooltips</u> with d3.js. It is composed by several interactive examples, allowing to play with the code to understand better how it works.</p>
+      </div>
+    </header>
+
+
+
+
+
+
+
+
+    <!-- TABLE of CONTENT -->
+    <div>
+        <nav class="col-sm-3 col-4" id="myScrollspy">
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="https://d3-graph-gallery.com/graph/interactivity_tooltip.html#mostbasic">Most basic tooltip</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://d3-graph-gallery.com/graph/interactivity_tooltip.html#customContent">Custom content with HTML</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://d3-graph-gallery.com/graph/interactivity_tooltip.html#position">Tooltip position</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="https://d3-graph-gallery.com/graph/interactivity_tooltip.html#template">Template</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://d3-graph-gallery.com/graph/interactivity_tooltip.html#example">More examples</a>
+            </li>
+          </ul>
+        </nav>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ==================== MOST BASIC TOOLTIP ==================== -->
+
+<section id="mostbasic" class="bg">
+<div class="container">
+  <h1>Most basic tooltip</h1>
+  <hr>
+  <div class="row">
+
+<!-- ==================== GRAPH SECTION = WHERE THE GRAPH APPEARS ==================== -->
+  <div class="col-lg-4 .align-middle">
+    <div style="position: -webkit-sticky; position: sticky; top: 120px">
+      <div class="bg-light" id="res-basicTrigger">
+
+
+<!-- Load d3.js -->
+<script src="./Building tooltips with d3.js_files/d3(1).v4.js"></script>
+
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz"><svg width="400" height="400"><circle id="circleBasicTooltip" cx="150" cy="200" r="40" fill="#69b3a2"></circle></svg><div style="position: absolute; visibility: hidden;">I'm a circle!</div></div>
+
+</div>
+      <br>
+      <div>
+        <h5>Steps:</h5>
+        <ul>
+          <br>
+          <li>First, a basic circle is added using <code>.svg</code>. Note that it would work the same with any type of <code>svg</code> element.</li>
+          <br>
+          <li>Then a new <code>div</code> is added, with a bit of text in it and a few features. It is actually the tooltip! But it is hidden is css with <code>visibility: hidden</code>.</li>
+          <br>
+          <li>Lastly, 3 different javascript functions are called when an action is done on the circle: hovering it, moving, and leaving it. This will reveal or hide the tooltip.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- ==================== CODE SECTION = WHERE THE CODE APPEARS ==================== -->
+<div class="col-lg-8 text-center .align-middle">
+
+<!-- ========= show html code ============== -->
+<aside style="position: -webkit-sticky; position: sticky; top: 120px">← Edit me! </aside>
+<pre class=" language-html"><code id="html-basicTrigger" contenteditable="true" class=" language-html"><span class="token doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>utf-8<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+
+<span class="token comment">&lt;!-- Load d3.js --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://d3js.org/d3.v4.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token comment">&lt;!-- Create a div where the graph will take place --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>my_dataviz<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+</code></pre>
+<!-- ==================================== -->
+
+
+
+<!-- ========= show JS code ==============  -->
+<pre class=" language-js"><code id="js-basicTrigger" contenteditable="true" class=" language-js"><span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+
+<span class="token comment">// Start by creating the svg area</span>
+<span class="token keyword">var</span> svg <span class="token operator">=</span> d3<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token string">"#my_dataviz"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"svg"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"width"</span><span class="token punctuation">,</span> <span class="token number">400</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"height"</span><span class="token punctuation">,</span> <span class="token number">400</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Append a circle</span>
+svg<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"circle"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">,</span> <span class="token string">"circleBasicTooltip"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"cx"</span><span class="token punctuation">,</span> <span class="token number">150</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"cy"</span><span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"r"</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> <span class="token string">"#69b3a2"</span><span class="token punctuation">)</span>
+
+<span class="token comment">// create a tooltip</span>
+<span class="token keyword">var</span> tooltip <span class="token operator">=</span> d3<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token string">"#my_dataviz"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"div"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"position"</span><span class="token punctuation">,</span> <span class="token string">"absolute"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"visibility"</span><span class="token punctuation">,</span> <span class="token string">"hidden"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token string">"I'm a circle!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//</span>
+d3<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token string">"#circleBasicTooltip"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"mouseover"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token keyword">return</span> tooltip<span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"visibility"</span><span class="token punctuation">,</span> <span class="token string">"visible"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"mousemove"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token keyword">return</span> tooltip<span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"top"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>event<span class="token punctuation">.</span>pageY<span class="token operator">-</span><span class="token number">800</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"px"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"left"</span><span class="token punctuation">,</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>pageX<span class="token operator">-</span><span class="token number">800</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"px"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"mouseout"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token keyword">return</span> tooltip<span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"visibility"</span><span class="token punctuation">,</span> <span class="token string">"hidden"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span></code></pre>
+<!-- ==================================== -->
+
+
+
+
+
+
+
+<!-- ==================== JAVASCRIPT SECTION : EXECUTE THIS CODE AND MAKE IT INTERACTIVE ==================== -->
+<script>
+// At the beginning, I read the html and JS fragments
+myHtmlParser('html-basicTrigger', 'res-basicTrigger')
+myJSParser('js-basicTrigger', 'res-basicTrigger')
+
+// If the user change the JS fragment, I run it again:
+document.getElementById('js-basicTrigger').addEventListener("input", function() {
+d3.select('#res-basicTrigger').html("");
+myHtmlParser('html-basicTrigger', 'res-basicTrigger');
+myJSParser('js-basicTrigger', 'res-basicTrigger');
+})
+
+// If the user change the HTML fragment, I run it again:
+document.getElementById('html-basicTrigger').addEventListener("input", function() {
+d3.select('#res-basicTrigger').html("");
+myHtmlParser('html-basicTrigger', 'res-basicTrigger');
+myJSParser('js-basicTrigger', 'res-basicTrigger');
+})
+</script>
+
+</div>
+
+
+  </div>
+</div>
+</section>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ==================== CUSTOM TOOLTIP WITH HTML ==================== -->
+
+<section id="customContent" class="bg">
+<div class="container">
+  <h1>Custom tooltip content with <code>html</code></h1>
+  <hr>
+  <div class="row">
+
+<!-- ==================== GRAPH SECTION = WHERE THE GRAPH APPEARS ==================== -->
+  <div class="col-lg-4 .align-middle">
+    <div style="position: -webkit-sticky; position: sticky; top: 120px">
+      <div class="bg-light" id="res-customContent">
+
+
+<!-- Load d3.js -->
+<script src="./Building tooltips with d3.js_files/d3(1).v4.js"></script>
+
+<!-- Create a div where the graph will take place -->
+<div id="div_customContent"><svg width="400" height="400"><circle id="circleCustomTooltip" cx="150" cy="200" r="40" fill="#69b3a2"></circle></svg><div style="position: absolute; visibility: hidden; background-color: white; border: 1px solid; border-radius: 5px; padding: 10px;"><p>I'm a tooltip written in HTML</p><img src="./Building tooltips with d3.js_files/ArcSmal.png"><br>Fancy<br>Isn't it?</div></div>
+
+</div>
+      <br>
+      <div>
+        <h5>Steps:</h5>
+        <ul>
+          <br>
+          <li>Good news! you can put whatever <code>html</code> element in your tooltip. Thus, absolutely any customization is doable.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- ==================== CODE SECTION = WHERE THE CODE APPEARS ==================== -->
+<div class="col-lg-8 text-center .align-middle">
+
+<!-- ========= show html code ============== -->
+<aside style="position: -webkit-sticky; position: sticky; top: 120px">← Edit me! </aside>
+<pre class=" language-html"><code id="html-customContent" contenteditable="true" class=" language-html"><span class="token doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>utf-8<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+
+<span class="token comment">&lt;!-- Load d3.js --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://d3js.org/d3.v4.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token comment">&lt;!-- Create a div where the graph will take place --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>div_customContent<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+</code></pre>
+<!-- ==================================== -->
+
+
+
+<!-- ========= show JS code ==============  -->
+<pre class=" language-js"><code id="js-customContent" contenteditable="true" class=" language-js"><span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+
+<span class="token comment">// Start by creating the svg area</span>
+<span class="token keyword">var</span> svg_customContent <span class="token operator">=</span> d3<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token string">"#div_customContent"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"svg"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"width"</span><span class="token punctuation">,</span> <span class="token number">400</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"height"</span><span class="token punctuation">,</span> <span class="token number">400</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Append a circle</span>
+svg_customContent<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"circle"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">,</span> <span class="token string">"circleCustomTooltip"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"cx"</span><span class="token punctuation">,</span> <span class="token number">150</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"cy"</span><span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"r"</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> <span class="token string">"#69b3a2"</span><span class="token punctuation">)</span>
+
+<span class="token comment">// create a tooltip</span>
+<span class="token keyword">var</span> tooltip2 <span class="token operator">=</span> d3<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token string">"#div_customContent"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"div"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"position"</span><span class="token punctuation">,</span> <span class="token string">"absolute"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"visibility"</span><span class="token punctuation">,</span> <span class="token string">"hidden"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"background-color"</span><span class="token punctuation">,</span> <span class="token string">"white"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"border"</span><span class="token punctuation">,</span> <span class="token string">"solid"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"border-width"</span><span class="token punctuation">,</span> <span class="token string">"1px"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"border-radius"</span><span class="token punctuation">,</span> <span class="token string">"5px"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"padding"</span><span class="token punctuation">,</span> <span class="token string">"10px"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">html</span><span class="token punctuation">(</span><span class="token string">"&lt;p&gt;I'm a tooltip written in HTML&lt;/p&gt;&lt;img src='https://github.com/holtzy/D3-graph-gallery/blob/master/img/section/ArcSmal.png?raw=true'&gt;&lt;/img&gt;&lt;br&gt;Fancy&lt;br&gt;&lt;span style='font-size: 40px;'&gt;Isn't it?&lt;/span&gt;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+d3<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token string">"#circleCustomTooltip"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"mouseover"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token keyword">return</span> tooltip2<span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"visibility"</span><span class="token punctuation">,</span> <span class="token string">"visible"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"mousemove"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token keyword">return</span> tooltip2<span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"top"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>event<span class="token punctuation">.</span>pageY<span class="token operator">-</span><span class="token number">2390</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"px"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"left"</span><span class="token punctuation">,</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>pageX<span class="token operator">-</span><span class="token number">800</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"px"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"mouseout"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token keyword">return</span> tooltip2<span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"visibility"</span><span class="token punctuation">,</span> <span class="token string">"hidden"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span></code></pre>
+<!-- ==================================== -->
+
+
+
+
+
+
+
+<!-- ==================== JAVASCRIPT SECTION : EXECUTE THIS CODE AND MAKE IT INTERACTIVE ==================== -->
+<script>
+// At the beginning, I read the html and JS fragments
+myHtmlParser('html-customContent', 'res-customContent')
+myJSParser('js-customContent', 'res-customContent')
+
+// If the user change the JS fragment, I run it again:
+document.getElementById('js-customContent').addEventListener("input", function() {
+d3.select('#res-customContent').html("");
+myHtmlParser('html-customContent', 'res-customContent');
+myJSParser('js-customContent', 'res-customContent');
+})
+
+// If the user change the HTML fragment, I run it again:
+document.getElementById('html-customContent').addEventListener("input", function() {
+d3.select('#res-customContent').html("");
+myHtmlParser('html-customContent', 'res-customContent');
+myJSParser('js-customContent', 'res-customContent');
+})
+</script>
+
+</div>
+
+
+  </div>
+</div>
+</section>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ==================== TOOLTIP POSITION ==================== -->
+
+<section id="position" class="bg">
+<div class="container">
+  <h1>Control tooltip position: <code>event.pageX</code> or <code>d3.select(this)</code></h1>
+  <hr>
+  <p>Two different functions allow to recover the mouse position and use it to control the tooltip position.
+  <br><br>
+  </p><ul>
+    <li>
+      <p><code>event.pageX()</code> and <code>event.pageY()</code>. Recover the mouse position when the event happens. Used in the above example. Code looks like that:</p>
+      <pre class=" language-js"><code id="js-customContent" contenteditable="false" class=" language-js">
+      tooltip
+        <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"top"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>event<span class="token punctuation">.</span>pageY<span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"px"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"left"</span><span class="token punctuation">,</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>pageX<span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"px"</span><span class="token punctuation">)</span>
+      </code></pre>
+      <p>Note that you can add a numeric value next to <code>event.pageX</code> or Y to adjust the tooltip position</p>
+    </li>
+    <br><br>
+    <li>
+      <code>d3.select(this)</code> is the second option. It selects the element that is hovered. Thus, it is possible to get whatever attribute or style of this element, like its position. If the element is a circle, you can get the <code>cx</code> attribute, which is the horizontal positioning.<p></p>
+      <pre class=" language-js"><code id="js-customContent" contenteditable="false" class=" language-js">
+      tooltip
+        <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"top"</span><span class="token punctuation">,</span> d3<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"cy"</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"px"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"left"</span><span class="token punctuation">,</span> d3<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"cx"</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"px"</span><span class="token punctuation">)</span>
+      </code></pre>
+    </li>
+    <br><br>
+    <li>
+      <code>d3.mouse(this)</code> another option. Not sure of the differences with 2 others above.<p></p>
+      <pre class=" language-js"><code id="js-customContent" contenteditable="false" class=" language-js">
+      tooltip
+        <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"top"</span><span class="token punctuation">,</span>  <span class="token punctuation">(</span>d3<span class="token punctuation">.</span><span class="token function">mouse</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"px"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"left"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>d3<span class="token punctuation">.</span><span class="token function">mouse</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"px"</span><span class="token punctuation">)</span>
+      </code></pre>
+    </li>
+  </ul>
+  <br><br>
+  <p><u>Note</u>: It can sometimes be quite a pain to position tooltips if you have a complex layout in your webpage. For instance, this post uses the <u>bootstrap</u> framework to build columns. Thus the <code>event.pageY()</code> position must be corrected.</p>
+  <p><u>ToDo</u>: Dig <a href="https://stackoverflow.com/questions/16256454/d3-js-position-tooltips-using-element-position-not-mouse-position">here</a> to understand this problem more in depth</p>
+</div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ==================== TEMPLATE ==================== -->
+
+<section id="template" class="bg">
+<div class="container">
+  <h1>Template for tooltips</h1>
+  <hr>
+  <div class="row">
+
+<!-- ==================== GRAPH SECTION = WHERE THE GRAPH APPEARS ==================== -->
+  <div class="col-lg-5 .align-middle">
+    <div style="position: -webkit-sticky; position: sticky; top: 120px">
+      <div class="bg-light" id="res-template">
+
+
+<!-- Load d3.js & plugin-->
+<script src="./Building tooltips with d3.js_files/d3(1).v4.js"></script>
+<script src="./Building tooltips with d3.js_files/d3-scale-chromatic.v1.min.js"></script>
+
+<!-- Create a div where the graph will take place -->
+<div id="div_template"><svg width="450" height="450"><g transform="translate(40,20)"><g transform="translate(0,400)" fill="none" font-size="10" font-family="sans-serif" text-anchor="middle" style="font-size: 15px;"><g class="tick" opacity="1" transform="translate(20.111940298507452,0)"><line stroke="#000" y2="0"></line><text fill="#000" y="3" dy="0.71em">A</text></g><g class="tick" opacity="1" transform="translate(58.42039800995025,0)"><line stroke="#000" y2="0"></line><text fill="#000" y="3" dy="0.71em">B</text></g><g class="tick" opacity="1" transform="translate(96.72885572139303,0)"><line stroke="#000" y2="0"></line><text fill="#000" y="3" dy="0.71em">C</text></g><g class="tick" opacity="1" transform="translate(135.03731343283582,0)"><line stroke="#000" y2="0"></line><text fill="#000" y="3" dy="0.71em">D</text></g><g class="tick" opacity="1" transform="translate(173.34577114427861,0)"><line stroke="#000" y2="0"></line><text fill="#000" y="3" dy="0.71em">E</text></g><g class="tick" opacity="1" transform="translate(211.6542288557214,0)"><line stroke="#000" y2="0"></line><text fill="#000" y="3" dy="0.71em">F</text></g><g class="tick" opacity="1" transform="translate(249.96268656716418,0)"><line stroke="#000" y2="0"></line><text fill="#000" y="3" dy="0.71em">G</text></g><g class="tick" opacity="1" transform="translate(288.27114427860704,0)"><line stroke="#000" y2="0"></line><text fill="#000" y="3" dy="0.71em">H</text></g><g class="tick" opacity="1" transform="translate(326.5796019900498,0)"><line stroke="#000" y2="0"></line><text fill="#000" y="3" dy="0.71em">I</text></g><g class="tick" opacity="1" transform="translate(364.8880597014926,0)"><line stroke="#000" y2="0"></line><text fill="#000" y="3" dy="0.71em">J</text></g></g><g fill="none" font-size="10" font-family="sans-serif" text-anchor="end" style="font-size: 15px;"><g class="tick" opacity="1" transform="translate(0,379.1044776119404)"><line stroke="#000" x2="0"></line><text fill="#000" x="-3" dy="0.32em">v1</text></g><g class="tick" opacity="1" transform="translate(0,339.30348258706476)"><line stroke="#000" x2="0"></line><text fill="#000" x="-3" dy="0.32em">v2</text></g><g class="tick" opacity="1" transform="translate(0,299.5024875621891)"><line stroke="#000" x2="0"></line><text fill="#000" x="-3" dy="0.32em">v3</text></g><g class="tick" opacity="1" transform="translate(0,259.70149253731347)"><line stroke="#000" x2="0"></line><text fill="#000" x="-3" dy="0.32em">v4</text></g><g class="tick" opacity="1" transform="translate(0,219.90049751243782)"><line stroke="#000" x2="0"></line><text fill="#000" x="-3" dy="0.32em">v5</text></g><g class="tick" opacity="1" transform="translate(0,180.0995024875622)"><line stroke="#000" x2="0"></line><text fill="#000" x="-3" dy="0.32em">v6</text></g><g class="tick" opacity="1" transform="translate(0,140.2985074626866)"><line stroke="#000" x2="0"></line><text fill="#000" x="-3" dy="0.32em">v7</text></g><g class="tick" opacity="1" transform="translate(0,100.49751243781097)"><line stroke="#000" x2="0"></line><text fill="#000" x="-3" dy="0.32em">v8</text></g><g class="tick" opacity="1" transform="translate(0,60.696517412935336)"><line stroke="#000" x2="0"></line><text fill="#000" x="-3" dy="0.32em">v9</text></g><g class="tick" opacity="1" transform="translate(0,20.89552238805971)"><line stroke="#000" x2="0"></line><text fill="#000" x="-3" dy="0.32em">v10</text></g></g><rect x="1.9154228855721271" y="360.19900497512447" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(103, 22, 110); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="1.9154228855721271" y="320.3980099502488" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(241, 239, 117); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="1.9154228855721271" y="280.5970149253732" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(71, 11, 106); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="1.9154228855721271" y="240.79601990049755" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(35, 12, 76); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="1.9154228855721271" y="200.9950248756219" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(216, 76, 62); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="1.9154228855721271" y="161.1940298507463" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(192, 58, 81); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="1.9154228855721271" y="121.39303482587067" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(249, 203, 53); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="1.9154228855721271" y="81.59203980099504" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(62, 9, 102); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="1.9154228855721271" y="41.79104477611941" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(249, 252, 157); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="1.9154228855721271" y="1.990049751243788" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(235, 102, 40); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="40.22388059701492" y="360.19900497512447" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(133, 33, 107); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="40.22388059701492" y="320.3980099502488" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(185, 53, 86); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="40.22388059701492" y="280.5970149253732" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(252, 168, 13); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="40.22388059701492" y="240.79601990049755" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(252, 159, 7); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="40.22388059701492" y="200.9950248756219" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(251, 184, 29); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="40.22388059701492" y="161.1940298507463" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(245, 219, 76); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="40.22388059701492" y="121.39303482587067" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(252, 174, 18); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="40.22388059701492" y="81.59203980099504" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(247, 209, 61); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="40.22388059701492" y="41.79104477611941" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(7, 5, 27); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="40.22388059701492" y="1.990049751243788" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(237, 105, 37); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="78.53233830845771" y="360.19900497512447" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(242, 242, 125); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="78.53233830845771" y="320.3980099502488" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(31, 12, 72); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="78.53233830845771" y="280.5970149253732" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(245, 249, 146); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="78.53233830845771" y="240.79601990049755" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(20, 11, 52); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="78.53233830845771" y="200.9950248756219" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(250, 194, 40); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="78.53233830845771" y="161.1940298507463" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(74, 12, 107); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="78.53233830845771" y="121.39303482587067" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(248, 135, 14); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="78.53233830845771" y="81.59203980099504" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(173, 48, 93); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="78.53233830845771" y="41.79104477611941" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(247, 132, 16); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="78.53233830845771" y="1.990049751243788" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(144, 37, 104); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="116.8407960199005" y="360.19900497512447" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(249, 140, 10); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="116.8407960199005" y="320.3980099502488" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(52, 10, 95); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="116.8407960199005" y="280.5970149253732" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(244, 225, 86); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="116.8407960199005" y="240.79601990049755" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(157, 41, 100); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="116.8407960199005" y="200.9950248756219" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(43, 11, 87); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="116.8407960199005" y="161.1940298507463" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(92, 18, 110); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="116.8407960199005" y="121.39303482587067" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(250, 144, 8); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="116.8407960199005" y="81.59203980099504" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(79, 13, 108); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="116.8407960199005" y="41.79104477611941" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(0, 0, 4); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="116.8407960199005" y="1.990049751243788" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(249, 199, 47); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="155.1492537313433" y="360.19900497512447" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(162, 43, 98); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="155.1492537313433" y="320.3980099502488" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(100, 21, 110); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="155.1492537313433" y="280.5970149253732" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(213, 74, 65); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="155.1492537313433" y="240.79601990049755" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(203, 65, 73); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="155.1492537313433" y="200.9950248756219" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(233, 97, 43); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="155.1492537313433" y="161.1940298507463" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(207, 68, 70); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="155.1492537313433" y="121.39303482587067" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(16, 9, 45); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="155.1492537313433" y="81.59203980099504" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(251, 155, 6); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="155.1492537313433" y="41.79104477611941" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(182, 52, 88); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="155.1492537313433" y="1.990049751243788" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(128, 31, 108); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="193.4577114427861" y="360.19900497512447" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(124, 29, 109); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="193.4577114427861" y="320.3980099502488" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(252, 165, 10); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="193.4577114427861" y="280.5970149253732" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(13, 8, 41); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="193.4577114427861" y="240.79601990049755" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(169, 46, 94); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="193.4577114427861" y="200.9950248756219" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(177, 50, 90); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="193.4577114427861" y="161.1940298507463" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(252, 255, 164); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="193.4577114427861" y="121.39303482587067" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(49, 10, 92); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="193.4577114427861" y="81.59203980099504" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(149, 38, 103); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="193.4577114427861" y="41.79104477611941" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(116, 26, 110); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="193.4577114427861" y="1.990049751243788" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(22, 11, 57); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="231.76616915422886" y="360.19900497512447" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(251, 150, 6); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="231.76616915422886" y="320.3980099502488" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(225, 86, 53); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="231.76616915422886" y="280.5970149253732" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(242, 234, 105); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="231.76616915422886" y="240.79601990049755" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(40, 11, 83); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="231.76616915422886" y="200.9950248756219" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(241, 113, 31); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="231.76616915422886" y="161.1940298507463" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(228, 90, 49); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="231.76616915422886" y="121.39303482587067" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(223, 83, 55); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="231.76616915422886" y="81.59203980099504" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(200, 63, 75); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="231.76616915422886" y="41.79104477611941" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(136, 34, 106); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="231.76616915422886" y="1.990049751243788" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(243, 229, 93); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="270.0746268656717" y="360.19900497512447" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(141, 35, 105); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="270.0746268656717" y="320.3980099502488" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(87, 16, 110); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="270.0746268656717" y="280.5970149253732" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(246, 215, 70); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="270.0746268656717" y="240.79601990049755" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(252, 180, 24); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="270.0746268656717" y="200.9950248756219" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(108, 24, 110); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="270.0746268656717" y="161.1940298507463" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(1, 1, 6); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="270.0746268656717" y="121.39303482587067" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(189, 56, 83); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="270.0746268656717" y="81.59203980099504" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(95, 19, 110); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="270.0746268656717" y="41.79104477611941" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(154, 40, 101); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="270.0746268656717" y="1.990049751243788" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(10, 7, 34); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="308.38308457711446" y="360.19900497512447" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(5, 4, 23); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="308.38308457711446" y="320.3980099502488" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(219, 80, 59); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="308.38308457711446" y="280.5970149253732" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(66, 10, 104); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="308.38308457711446" y="240.79601990049755" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(84, 15, 109); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="308.38308457711446" y="200.9950248756219" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(2, 2, 12); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="308.38308457711446" y="161.1940298507463" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(243, 118, 27); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="308.38308457711446" y="121.39303482587067" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(120, 28, 109); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="308.38308457711446" y="81.59203980099504" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(239, 110, 33); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="308.38308457711446" y="41.79104477611941" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(210, 70, 68); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="308.38308457711446" y="1.990049751243788" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(113, 25, 110); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="346.69154228855723" y="360.19900497512447" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(57, 9, 99); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="346.69154228855723" y="320.3980099502488" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(251, 190, 35); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="346.69154228855723" y="280.5970149253732" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(196, 60, 78); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="346.69154228855723" y="240.79601990049755" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(165, 44, 96); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="346.69154228855723" y="200.9950248756219" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(245, 123, 23); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="346.69154228855723" y="161.1940298507463" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(230, 93, 47); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="346.69154228855723" y="121.39303482587067" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(3, 2, 16); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="346.69154228855723" y="81.59203980099504" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(27, 12, 65); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="346.69154228855723" y="41.79104477611941" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(243, 246, 138); stroke-width: 4; stroke: none; opacity: 0.8;"></rect><rect x="346.69154228855723" y="1.990049751243788" rx="4" ry="4" width="36.39303482587065" height="37.810945273631845" style="fill: rgb(246, 126, 20); stroke-width: 4; stroke: none; opacity: 0.8;"></rect></g></svg><div class="tooltip" style="opacity: 0; background-color: white; border: 2px solid; border-radius: 5px; padding: 5px; left: 437.5px; top: 85px;">The exact value of<br>this cell is: 12</div></div>
+
+</div>
+      <br>
+      <div>
+        <h5>Notes:</h5>
+        <ul>
+          <br>
+          <li>Learn more about heatmap <a href="https://d3-graph-gallery.com/heatmap.html">here</a>.</li>
+          <br>
+          <li>It is a good practice to define the mouseover, mousemove and mouseleave behaviour in 3 distinct functions.</li>
+          <br>
+          <li>Here the square style is slightly modified when the element is hovered. It allows to make more obvious which element is observed.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- ==================== CODE SECTION = WHERE THE CODE APPEARS ==================== -->
+<div class="col-lg-7 text-center .align-middle">
+
+<!-- ========= show html code ============== -->
+<aside style="position: -webkit-sticky; position: sticky; top: 120px">← Edit me! </aside>
+<pre class=" language-html"><code id="html-template" contenteditable="true" class=" language-html"><span class="token doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>utf-8<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+
+<span class="token comment">&lt;!-- Load d3.js &amp; plugin--&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://d3js.org/d3.v4.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://d3js.org/d3-scale-chromatic.v1.min.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token comment">&lt;!-- Create a div where the graph will take place --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>div_template<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+</code></pre>
+<!-- ==================================== -->
+
+
+
+<!-- ========= show JS code ==============  -->
+<pre class=" language-js"><code id="js-template" contenteditable="true" class=" language-js"><span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+
+<span class="token comment">// set the dimensions and margins of the graph</span>
+<span class="token keyword">var</span> margin <span class="token operator">=</span> <span class="token punctuation">{</span>top<span class="token punctuation">:</span> <span class="token number">20</span><span class="token punctuation">,</span> right<span class="token punctuation">:</span> <span class="token number">25</span><span class="token punctuation">,</span> bottom<span class="token punctuation">:</span> <span class="token number">30</span><span class="token punctuation">,</span> left<span class="token punctuation">:</span> <span class="token number">40</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  width <span class="token operator">=</span> <span class="token number">450</span> <span class="token operator">-</span> margin<span class="token punctuation">.</span>left <span class="token operator">-</span> margin<span class="token punctuation">.</span>right<span class="token punctuation">,</span>
+  height <span class="token operator">=</span> <span class="token number">450</span> <span class="token operator">-</span> margin<span class="token punctuation">.</span>top <span class="token operator">-</span> margin<span class="token punctuation">.</span>bottom<span class="token punctuation">;</span>
+
+<span class="token comment">// append the svg object to the body of the page</span>
+<span class="token keyword">var</span> svg <span class="token operator">=</span> d3<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token string">"#div_template"</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"svg"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"width"</span><span class="token punctuation">,</span> width <span class="token operator">+</span> margin<span class="token punctuation">.</span>left <span class="token operator">+</span> margin<span class="token punctuation">.</span>right<span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"height"</span><span class="token punctuation">,</span> height <span class="token operator">+</span> margin<span class="token punctuation">.</span>top <span class="token operator">+</span> margin<span class="token punctuation">.</span>bottom<span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"g"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"transform"</span><span class="token punctuation">,</span>
+        <span class="token string">"translate("</span> <span class="token operator">+</span> margin<span class="token punctuation">.</span>left <span class="token operator">+</span> <span class="token string">","</span> <span class="token operator">+</span> margin<span class="token punctuation">.</span>top <span class="token operator">+</span> <span class="token string">")"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//Read the data</span>
+d3<span class="token punctuation">.</span><span class="token function">csv</span><span class="token punctuation">(</span><span class="token string">"https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/heatmap_data.csv"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+  <span class="token comment">// Labels of row and columns -&gt; unique identifier of the column called 'group' and 'variable'</span>
+  <span class="token keyword">var</span> myGroups <span class="token operator">=</span> d3<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token keyword">return</span> d<span class="token punctuation">.</span>group<span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">var</span> myVars <span class="token operator">=</span> d3<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token keyword">return</span> d<span class="token punctuation">.</span>variable<span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// Build X scales and axis:</span>
+  <span class="token keyword">var</span> x <span class="token operator">=</span> d3<span class="token punctuation">.</span><span class="token function">scaleBand</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">range</span><span class="token punctuation">(</span><span class="token punctuation">[</span> <span class="token number">0</span><span class="token punctuation">,</span> width <span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">domain</span><span class="token punctuation">(</span>myGroups<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token number">0.05</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  svg<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"g"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"font-size"</span><span class="token punctuation">,</span> <span class="token number">15</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"transform"</span><span class="token punctuation">,</span> <span class="token string">"translate(0,"</span> <span class="token operator">+</span> height <span class="token operator">+</span> <span class="token string">")"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>d3<span class="token punctuation">.</span><span class="token function">axisBottom</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">tickSize</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token string">".domain"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// Build Y scales and axis:</span>
+  <span class="token keyword">var</span> y <span class="token operator">=</span> d3<span class="token punctuation">.</span><span class="token function">scaleBand</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">range</span><span class="token punctuation">(</span><span class="token punctuation">[</span> height<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">domain</span><span class="token punctuation">(</span>myVars<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token number">0.05</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  svg<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"g"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"font-size"</span><span class="token punctuation">,</span> <span class="token number">15</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>d3<span class="token punctuation">.</span><span class="token function">axisLeft</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">tickSize</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token string">".domain"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// Build color scale</span>
+  <span class="token keyword">var</span> myColor <span class="token operator">=</span> d3<span class="token punctuation">.</span><span class="token function">scaleSequential</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">interpolator</span><span class="token punctuation">(</span>d3<span class="token punctuation">.</span>interpolateInferno<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">domain</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// create a tooltip</span>
+  <span class="token keyword">var</span> Tooltip <span class="token operator">=</span> d3<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token string">"#div_template"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"div"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"opacity"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"class"</span><span class="token punctuation">,</span> <span class="token string">"tooltip"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"background-color"</span><span class="token punctuation">,</span> <span class="token string">"white"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"border"</span><span class="token punctuation">,</span> <span class="token string">"solid"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"border-width"</span><span class="token punctuation">,</span> <span class="token string">"2px"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"border-radius"</span><span class="token punctuation">,</span> <span class="token string">"5px"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"padding"</span><span class="token punctuation">,</span> <span class="token string">"5px"</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// Three function that change the tooltip when user hover / move / leave a cell</span>
+  <span class="token keyword">var</span> <span class="token function-variable function">mouseover</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Tooltip
+      <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"opacity"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    d3<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"stroke"</span><span class="token punctuation">,</span> <span class="token string">"black"</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"opacity"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">var</span> <span class="token function-variable function">mousemove</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Tooltip
+      <span class="token punctuation">.</span><span class="token function">html</span><span class="token punctuation">(</span><span class="token string">"The exact value of&lt;br&gt;this cell is: "</span> <span class="token operator">+</span> d<span class="token punctuation">.</span>value<span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"left"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>d3<span class="token punctuation">.</span><span class="token function">mouse</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token number">70</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"px"</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"top"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>d3<span class="token punctuation">.</span><span class="token function">mouse</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"px"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">var</span> <span class="token function-variable function">mouseleave</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Tooltip
+      <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"opacity"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    d3<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"stroke"</span><span class="token punctuation">,</span> <span class="token string">"none"</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"opacity"</span><span class="token punctuation">,</span> <span class="token number">0.8</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+
+  <span class="token comment">// add the squares</span>
+  svg<span class="token punctuation">.</span><span class="token function">selectAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">data</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token keyword">return</span> d<span class="token punctuation">.</span>group<span class="token operator">+</span><span class="token string">':'</span><span class="token operator">+</span>d<span class="token punctuation">.</span>variable<span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">enter</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"rect"</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"x"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">x</span><span class="token punctuation">(</span>d<span class="token punctuation">.</span>group<span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"y"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">y</span><span class="token punctuation">(</span>d<span class="token punctuation">.</span>variable<span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"rx"</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"ry"</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"width"</span><span class="token punctuation">,</span> x<span class="token punctuation">.</span><span class="token function">bandwidth</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">"height"</span><span class="token punctuation">,</span> y<span class="token punctuation">.</span><span class="token function">bandwidth</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">myColor</span><span class="token punctuation">(</span>d<span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">}</span> <span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"stroke-width"</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"stroke"</span><span class="token punctuation">,</span> <span class="token string">"none"</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">"opacity"</span><span class="token punctuation">,</span> <span class="token number">0.8</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"mouseover"</span><span class="token punctuation">,</span> mouseover<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"mousemove"</span><span class="token punctuation">,</span> mousemove<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"mouseleave"</span><span class="token punctuation">,</span> mouseleave<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span></code></pre>
+<!-- ==================================== -->
+
+
+
+
+
+
+
+<!-- ==================== JAVASCRIPT SECTION : EXECUTE THIS CODE AND MAKE IT INTERACTIVE ==================== -->
+<script>
+// At the beginning, I read the html and JS fragments
+myHtmlParser('html-template', 'res-template')
+myJSParser('js-template', 'res-template')
+
+// If the user change the JS fragment, I run it again:
+document.getElementById('js-template').addEventListener("input", function() {
+d3.select('#res-template').html("");
+myHtmlParser('html-template', 'res-template');
+myJSParser('js-template', 'res-template');
+})
+
+// If the user change the HTML fragment, I run it again:
+document.getElementById('html-template').addEventListener("input", function() {
+d3.select('#res-template').html("");
+myHtmlParser('html-template', 'res-template');
+myJSParser('js-template', 'res-template');
+})
+</script>
+
+</div>
+
+
+  </div>
+</div>
+</section>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<!-- ==================== MORE EXAMPLES ==================== -->
+
+<section class="bg" id="example">
+  <div class="container">
+
+    <h1>Examples</h1>
+    <hr>
+    <p>A set of d3.js chart examples with reproducible code that use the tooltip concepts described above:</p>
+    <div id="portfolio-items" class="row">
+
+      <div class="col-md-4 col-sm-6 portfolio-item">
+        <a class="portfolio-link" href="https://d3-graph-gallery.com/graph/boxplot_horizontal.html">
+          <img class="img-fluid" src="./Building tooltips with d3.js_files/boxplot_template.png" alt="">
+        </a>
+      </div>
+      <div class="col-md-4 col-sm-6 portfolio-item">
+        <a class="portfolio-link" href="https://d3-graph-gallery.com/graph/scatter_tooltip.html">
+          <img class="img-fluid" src="./Building tooltips with d3.js_files/scatter_tooltip.png" alt="">
+        </a>
+      </div>
+      <div class="col-md-4 col-sm-6 portfolio-item">
+        <a class="portfolio-link" href="https://d3-graph-gallery.com/graph/graph/interactivity_tooltip.html#template">
+          <img class="img-fluid" src="./Building tooltips with d3.js_files/heatmap_tooltip.gif" alt="">
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ============================ RELATED BLOCKS ============================ -->
+
+<section id="related" class="bg-light" style="padding-top: 70px; padding-bottom: 70px">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-5 text-center .align-middle" style="border-right: solid; ">
+        <div style="display: table; height: 150px; overflow: hidden;">
+          <div style="display: table-cell; vertical-align: middle;">
+            <h2 class="section-heading text-uppercase" style="color: black">Related blocks</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div style="display: table; height: 150px; overflow: hidden;">
+          <div style="display: table-cell; vertical-align: middle;">
+            <ul>
+            <li><i>Simple D3 tooltip</i> by <a href="http://bl.ocks.org/biovisualize/1016860">Chris Viau</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ============================ CONTACT SECTION ============================ -->
+
+  <!-- ANCHOR -->
+  <a name="contactanchor"></a>
+
+
+<section id="contact" class="bg" style="background-color: white"><div class="container">
+  <div class="row">
+    <div class="col-lg-2 text-center"></div>
+    <div class="col-lg-8 text-center">
+      <br><br><br>
+      <h2 class="section-heading text-uppercase" style="color: black">Contact</h2>
+      <p>This document is a work by <a href="https://www.yan-holtz.com/">Yan Holtz</a>. Any feedback is highly encouraged. You can fill an issue on <a href="https://github.com/holtzy/D3-graph-gallery/issues">Github</a>, drop me a message on <a href="https://twitter.com/R_Graph_Gallery">Twitter</a>, or send an email pasting <a href="https://d3-graph-gallery.com/graph/interactivity_tooltip.html">yan.holtz.data</a> with <a href="https://d3-graph-gallery.com/graph/interactivity_tooltip.html">gmail.com</a>.</p>
+      <div style="text-align:center">
+         <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="https://github.com/holtzy/D3-graph-gallery">Github</a>
+         <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="https://twitter.com/R_Graph_Gallery">Twitter</a>
+       </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- THIS ALLOWS TO INSERT THE CONTACT CHUNK THAT IS STORED IN A CONTACT.HTML FILE-->
+<script>
+$(function(){
+  $("#contact").load("../html_chunk/contact.html");
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ============================ FOOTER SECTION ============================ --><footer class="bg-light" id="myFooter"><div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <span class="copyright">Copyright © the d3 graph gallery 2018</span>
+    </div>
+    <div class="col-md-4">
+      <ul class="list-inline social-buttons">
+        <li class="list-inline-item">
+          <a href="https://twitter.com/R_Graph_Gallery">
+            <i class="fa fa-twitter"></i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a href="https://github.com/holtzy">
+            <i class="fa fa-github"></i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a href="https://www.linkedin.com/in/yan-holtz-2477534a/">
+            <i class="fa fa-linkedin"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <ul class="list-inline quicklinks">
+        <li class="list-inline-item">
+          <a href="https://d3-graph-gallery.com/graph/privacy.html">Privacy Policy</a>
+        </li>
+        <li class="list-inline-item">
+          <a href="https://d3-graph-gallery.com/graph/interactivity_tooltip.html#">Terms of Use</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</footer>
+
+<!-- THIS ALLOWS TO INSERT THE FOOTER THAT IS STORED IN A FOOTER.HTML FILE-->
+<script>
+$(function(){
+  $("#myFooter").load("../html_chunk/footer.html");
+});
+</script>
+
+<!-- ============================ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+</body></html>
