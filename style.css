@@ -387,6 +387,7 @@ span{
 .btn-box.btns{
     display: inline-block;
     width: 15rem;
+    justify-content: center;
 }
 
 .btn-box.btns a::before{
@@ -692,9 +693,10 @@ input[type="number"]::-webkit-outer-spin-button {
     width: 100%;
 }
 
-.contact form .btn-box.btns {
+.btn-box.btns {
     display: inline-flex;
     justify-content: center;
+    font-size: 50%;
 }
 
 .contact form .btn-box.btns .btn {
@@ -958,7 +960,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
     .home-sci {
         position: absolute;
-        bottom: 40px;
+        bottom: 60px;
         left: 50%;
         transform: translateX(-50%);
         width: 160px;
@@ -970,7 +972,6 @@ input[type="number"]::-webkit-outer-spin-button {
         width: 38px;
         height: 38px;
         align-items: center;
-
     }
 
     .home-img{
@@ -984,7 +985,7 @@ input[type="number"]::-webkit-outer-spin-button {
         justify-content: center;
         margin: 0 auto;
     }
-
+    
 }
 
 @media (max-width: 462px){
@@ -1006,7 +1007,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
     .home-sci {
         position: absolute;
-        bottom: 40px;
+        bottom: 60px;
         left: 50%;
         transform: translateX(-50%);
         display: flex;
@@ -1040,7 +1041,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
     .home-sci {
         position: absolute;
-        bottom: 40px;
+        bottom: 60px;
         left: 50%;
         transform: translateX(-50%);
         width: 160px;
