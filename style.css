@@ -14,7 +14,8 @@
     --bg-color:#081b29;
     --second-bg-color:#112e42;
     --text-color:#ededed;
-    --main-color:#00abf0
+    --main-color:#00abf0;
+    --paper-color: #fff087;
 }
 
 html{
@@ -721,6 +722,10 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .contact form .btn-box.btns .btn:hover{
     color: var(--bg-color);
+}
+
+.papers {
+  color: var(--paper-color);
 }
 
 #msg{
