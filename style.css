@@ -24,7 +24,6 @@ html{
 }
 
 body{
-    /*background-color: #081b29;*/
     background: var(--bg-color);
     color: var(--text-color);
 }
@@ -292,6 +291,20 @@ section{
 .home-sci a:hover::before{
     width: 100%;
 }
+
+.home-imgHover{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background: var(--bg-color);
+    animation: showRight 1s ease forwards;
+    animation-delay: 3s;
+    z-index: 100;
+}
+
 
 .home-img{
     position: relative;
@@ -838,6 +851,27 @@ input[type="number"]::-webkit-outer-spin-button {
         height: 168px;
         transition: 0.5s;
     }
+
+    .home-imgHover{
+        width: 70%;
+        height: 10%;
+    }
+
+    .home-imgHoversmall{
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 40%;
+        height: 100%;
+        background: var(--bg-color);
+        animation: showRight 1s ease forwards;
+        animation-delay: 3s;
+        z-index: 100;
+    }
+
+
+
 }
 
 @media (max-width: 768px){
