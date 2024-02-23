@@ -679,14 +679,18 @@ input[type="number"]::-webkit-outer-spin-button {
     width: 100%;
 }
 
-
+.contact form .btn-box.btns {
+    display: inline-flex;
+    justify-content: center;
+}
 
 .contact form .btn-box.btns .btn {
     cursor: pointer;
     position: relative;
-    display: inline-flex;
+    display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
     width: 180px;
     height: 100%;
     background: transparent;
@@ -911,18 +915,35 @@ input[type="number"]::-webkit-outer-spin-button {
         font-size: 5.8rem;
     }
 
-    .home-sci{
+    .home-sci {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
         width: 160px;
+        display: flex;
+        justify-content: space-between;
     }
 
     .home-sci a{
         width: 38px;
         height: 38px;
+        align-items: center;
+
     }
 
     .home-img{
         display: none;
     }
+
+
+    .btn-box{
+        position: relative;
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
 }
 
 @media (max-width: 462px){
@@ -942,6 +963,22 @@ input[type="number"]::-webkit-outer-spin-button {
         width: 100%;
     }
 
+    .home-sci {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .btn-box{
+        position: relative;
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
 }
 
 @media (max-width: 371px){
@@ -959,9 +996,21 @@ input[type="number"]::-webkit-outer-spin-button {
     .home-img{
             display: none;
     }
+
+    .home-sci {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 160px;
+        display: flex;
+        justify-content: space-between;
+    }
+
     .btn-box{
-        display: inline-flex;
+        position: relative;
+        display: flex;
         justify-content: center;
-        align-items: center;
+        margin: 0 auto;
     }
 }
