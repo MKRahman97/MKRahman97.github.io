@@ -387,7 +387,6 @@ span{
 .btn-box.btns{
     display: inline-block;
     width: 15rem;
-    justify-content: center;
 }
 
 .btn-box.btns a::before{
@@ -401,6 +400,10 @@ span{
 
 #dots {
     color: var(--text-color); /* Color for the dots */
+}
+
+#readmore{
+    font-size: 14px;
 }
 
 .education{
@@ -441,7 +444,7 @@ span{
 .education-box .education-content::before{
     content:'';
     position:absolute;
-    top:0;
+    top:18px;
     left:-1.1rem;
     width:2rem;
     height:2rem;
@@ -985,7 +988,7 @@ input[type="number"]::-webkit-outer-spin-button {
         justify-content: center;
         margin: 0 auto;
     }
-    
+
 }
 
 @media (max-width: 462px){
