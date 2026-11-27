@@ -11,16 +11,12 @@ Personal portfolio site for Mohammed Rahman. Static HTML/CSS/JS, hosted on GitHu
 - `content.json` — single source of truth for all text, links, papers, skills and contact settings
 - `index.html` — structural skeleton only; dynamic parts are empty containers filled by JS
 - `script.js` — fetches `content.json` on load and builds the DOM (hero, spectrum, work, timeline, papers, skills, contact)
-- `style.css` — all styling. Two candidate looks share one layout: `:root[data-look="console"]` (dark instrument console, IBM Plex) and `:root[data-look="clean"]` (white, photo-led, Schibsted Grotesk). Each look block only sets tokens; `[data-look="clean"] ...` rules hold its few layout overrides.
+- `style.css` — all styling. One layout (IBM Plex type) with two colour themes: `:root[data-theme="dark"]` (navy instrument display, teal and amber) and `:root[data-theme="light"]` (white and blue). Theme blocks only set colour tokens; never add layout rules per theme.
 - `Images/` — `headshot.jpg` (900px) and `headshot-sm.jpg` (480px), `Mohammed_Rahman_CV.pdf`
 
-## Choosing the final look
+## Light and dark theme
 
-While `meta.previewSwitcher` is `true`, a floating "Preview look" switch appears (also `?look=clean` / `?look=console` in the URL). Once a look is chosen:
-1. Set `data-look` on `<html>` in `index.html` to the chosen look and delete the look-picking `<script>` in `<head>`.
-2. In `style.css`, delete the other look's token block, the `[data-look="clean"]` overrides (if console was chosen) and the `.look-switch` rules.
-3. Remove the `#look-switch` markup, `initLookSwitch`/`setLook` in `script.js`, and `meta.previewSwitcher`.
-4. Drop the unused Google Fonts family from the `<link>` in `index.html`.
+The inline `<script>` in `<head>` sets `data-theme` before first paint: the visitor's saved choice (`localStorage.theme`), else their system `prefers-color-scheme`. The sun/moon button in the top bar (`#theme-toggle`, `initTheme`/`applyTheme` in `script.js`) switches and saves it, and updates the `theme-color` meta. Any new colour must be a token defined in both theme blocks; check text contrast in both.
 
 ## Viewing locally
 
@@ -33,7 +29,7 @@ Hard refresh after edits: **Ctrl+Shift+R**
 ## content.json structure
 
 ```
-meta:        siteTitle, brand, authorName (bolded in author lists), showAward, previewSwitcher, footer
+meta:        siteTitle, brand, authorName (bolded in author lists), showAward, footer
 hero:        firstName, lastName, role, pitch, readout[{key,value}], cvHref, cvDownloadName, photo, photoAlt
 social:      [{ label, href, icon }]          icon = full class string, e.g. "bx bxl-linkedin" or "ai ai-orcid"
 spectrum:    [{ id, label, position 0-1, height 0-1, summary, awardSummary?, link, linkText }]
@@ -61,6 +57,7 @@ contact:     { intro, email, mailSubject, web3formsKey, formSubject }
 
 ## Public-content rules
 
+- Write for a reader outside GSK. Lead with what a tool does ("Oligonucleotide analysis platform", "Automated lab data pipeline"); in-house names (MOSAIC, FIL) appear only in the `expansion` line. Keep spectrum peak labels to about 12 characters so they don't collide on phones.
 - Don't mention earlier internal tools; MOSAIC is the story (see the workspace-level CLAUDE.md for the names to avoid).
 - No internal cost figures, CRO partner names or internal system/catalog names.
 - MOSAIC is rules and physics based: never call it ML or AI.

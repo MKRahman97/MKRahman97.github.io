@@ -1,44 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" data-look="console">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mohammed Rahman | Senior Scientist and Python developer at GSK</title>
-    <meta name="description" content="Mohammed Rahman: Senior Scientist at GSK who builds the software analytical scientists use, from raw mass spectrometry files to the finished report.">
+    <meta name="description" content="Mohammed Rahman: Senior Scientist at GSK who builds software that takes mass spectrometry data from the raw instrument file to the finished report.">
     <meta property="og:title" content="Mohammed Rahman | Senior Scientist and Python developer at GSK">
-    <meta property="og:description" content="I build the software analytical scientists use, from raw instrument files to the finished report.">
+    <meta property="og:description" content="I build software that takes mass spectrometry data from the raw instrument file to the finished report.">
     <meta property="og:image" content="https://mkrahman97.github.io/Images/headshot.jpg">
     <meta property="og:url" content="https://mkrahman97.github.io/">
     <meta property="og:type" content="profile">
     <meta name="theme-color" content="#0F1B2D">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css">
     <link rel="stylesheet" href="style.css">
     <script>
-        // Pick the look before first paint so the page never flashes the wrong one.
+        // Pick the theme before first paint so the page never flashes the wrong one:
+        // the visitor's saved choice, else their system setting.
         (function () {
-            var q = new URLSearchParams(location.search).get('look');
             var saved = null;
-            try { saved = localStorage.getItem('look'); } catch (e) {}
-            var look = q || saved;
-            if (look === 'console' || look === 'clean') document.documentElement.dataset.look = look;
+            try { saved = localStorage.getItem('theme'); } catch (e) {}
+            var theme = saved === 'light' || saved === 'dark' ? saved
+                : (window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            document.documentElement.dataset.theme = theme;
         })();
     </script>
 </head>
 <body>
 
 <a class="skip-link" href="#main">Skip to content</a>
-
-<div class="look-switch" id="look-switch" hidden>
-    <span>Preview look</span>
-    <div class="look-switch-buttons" role="group" aria-label="Preview look">
-        <button type="button" data-look-choice="console">Console</button>
-        <button type="button" data-look-choice="clean">Clean</button>
-    </div>
-</div>
 
 <header class="topbar" id="topbar">
     <div class="topbar-inner">
@@ -53,6 +46,9 @@
             <a href="#skills">Skills</a>
             <a href="#contact">Contact</a>
         </nav>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light theme" title="Switch to light theme">
+            <i class="bx bx-sun" aria-hidden="true"></i>
+        </button>
         <a class="btn btn-small btn-solid topbar-cv" id="topbar-cv" href="Images/Mohammed_Rahman_CV.pdf" download>Download CV</a>
     </div>
 </header>

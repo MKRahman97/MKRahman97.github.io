@@ -29,26 +29,41 @@ function icon(className) {
     return el('i', { class: className, 'aria-hidden': 'true' });
 }
 
-// ── Look switcher (preview only, until one look is chosen) ────────────────────
+// ── Light / dark theme ────────────────────────────────────────────────────────
+// The inline script in <head> sets data-theme before first paint (saved choice,
+// else the system setting). This keeps the button, browser bar colour and
+// system changes in step with it.
 
-function setLook(look) {
-    document.documentElement.dataset.look = look;
-    try { localStorage.setItem('look', look); } catch (e) { /* private mode */ }
-    document.querySelectorAll('[data-look-choice]').forEach(btn => {
-        btn.setAttribute('aria-pressed', String(btn.dataset.lookChoice === look));
-    });
+const THEME_BAR = { dark: '#0F1B2D', light: '#FFFFFF' };
+
+function applyTheme(theme, save) {
+    document.documentElement.dataset.theme = theme;
+    if (save) {
+        try { localStorage.setItem('theme', theme); } catch (e) { /* private mode */ }
+    }
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.content = look === 'clean' ? '#FFFFFF' : '#0F1B2D';
+    if (meta) meta.content = THEME_BAR[theme];
+    const btn = document.getElementById('theme-toggle');
+    if (btn) {
+        const next = theme === 'dark' ? 'light' : 'dark';
+        btn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
+        btn.title = 'Switch to ' + next + ' theme';
+        btn.querySelector('i').className = next === 'light' ? 'bx bx-sun' : 'bx bx-moon';
+    }
 }
 
-function initLookSwitch(enabled) {
-    const box = document.getElementById('look-switch');
-    if (!enabled) return;
-    box.hidden = false;
-    box.querySelectorAll('[data-look-choice]').forEach(btn => {
-        btn.addEventListener('click', () => setLook(btn.dataset.lookChoice));
+function initTheme() {
+    applyTheme(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark', false);
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+        applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark', true);
     });
-    setLook(document.documentElement.dataset.look || 'console');
+    // Follow the system setting until the visitor picks a theme themselves.
+    const media = window.matchMedia('(prefers-color-scheme: light)');
+    media.addEventListener('change', e => {
+        let saved = null;
+        try { saved = localStorage.getItem('theme'); } catch (err) { /* private mode */ }
+        if (!saved) applyTheme(e.matches ? 'light' : 'dark', false);
+    });
 }
 
 // ── Navigation ────────────────────────────────────────────────────────────────
@@ -569,6 +584,7 @@ function renderContact(data) {
 // ── Boot ──────────────────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
     initNav();
     fetch('content.json')
         .then(r => {
@@ -579,7 +595,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.title = data.meta.siteTitle;
             document.getElementById('brand').textContent = data.meta.brand;
             document.getElementById('footer-text').textContent = data.meta.footer;
-            initLookSwitch(data.meta.previewSwitcher);
             renderHero(data);
             renderSpectrum(data.spectrum, data.meta.showAward);
             let resizeTimer;

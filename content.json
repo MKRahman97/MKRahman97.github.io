@@ -4,7 +4,6 @@
     "brand": "M. K. Rahman",
     "authorName": "M. Rahman",
     "showAward": false,
-    "previewSwitcher": true,
     "footer": "Mohammed Rahman, Stevenage, UK"
   },
 
@@ -12,11 +11,11 @@
     "firstName": "Mohammed",
     "lastName": "Rahman",
     "role": "Senior Scientist at GSK",
-    "pitch": "I build the software analytical scientists use, from raw mass spectrometry files to the finished report. PhD in Analytical Science, writing production Python every day.",
+    "pitch": "I build software that takes mass spectrometry data from the raw instrument file to the finished report. I have a PhD in Analytical Science and write production Python every day.",
     "readout": [
       { "key": "focus", "value": "Software for oligonucleotide analysis" },
       { "key": "based", "value": "Stevenage, UK" },
-      { "key": "building", "value": "MOSAIC, a mass spectrometry analysis app" },
+      { "key": "building", "value": "An analysis app for mass spectrometry data" },
       { "key": "stack", "value": "Python, Flask, SQL, Plotly, Claude Code" }
     ],
     "cvHref": "Images/Mohammed_Rahman_CV.pdf",
@@ -34,22 +33,22 @@
   "spectrum": [
     {
       "id": "mosaic",
-      "label": "MOSAIC",
+      "label": "Analysis app",
       "position": 0.2,
       "height": 1.0,
-      "summary": "One app from the raw Orbitrap file to the report: method optimisation, oligonucleotide sequencing, impurity identification and batch comparison.",
-      "awardSummary": "Award-winning app that goes from the raw Orbitrap file to the report: method optimisation, oligonucleotide sequencing, impurity identification and batch comparison.",
+      "summary": "One web app that goes from the raw instrument file to the report: method optimisation, oligonucleotide sequencing, impurity identification and batch comparison.",
+      "awardSummary": "Award-winning web app that goes from the raw instrument file to the report: method optimisation, oligonucleotide sequencing, impurity identification and batch comparison.",
       "link": "#work-mosaic",
-      "linkText": "Read about MOSAIC"
+      "linkText": "Read about the analysis platform"
     },
     {
       "id": "fil",
-      "label": "FIL",
+      "label": "Pipeline",
       "position": 0.36,
-      "height": 0.62,
-      "summary": "An unattended data pipeline that makes years of lab fragment records searchable, with no manual steps.",
+      "height": 0.56,
+      "summary": "Runs on a schedule and turns years of fragment data stuck in lab slide decks into a searchable database.",
       "link": "#work-fil",
-      "linkText": "Read about FIL"
+      "linkText": "Read about the pipeline"
     },
     {
       "id": "enterobase",
@@ -83,31 +82,36 @@
   "work": [
     {
       "id": "mosaic",
-      "name": "MOSAIC",
-      "expansion": "Mass-spec Oligo Sequence Assignment, Impurity and Comparability",
+      "name": "Oligonucleotide analysis platform",
+      "expansion": "In-house web app at GSK, known internally as MOSAIC",
       "org": "GSK",
       "years": "2025 to present",
       "featured": true,
       "award": "GSK award, December 2026",
-      "summary": "Analysing oligonucleotide medicines used to mean several software packages, calculators and hand-built spreadsheets, repeated by every analyst. I built a suite of analysis tools and combined them into MOSAIC, one app that goes from the raw instrument file to the report.",
+      "summary": "A web app GSK's mass spectrometry scientists use to check the quality of oligonucleotide medicines (drugs made from short strands of DNA or RNA). Built to replace a mix of software packages, calculators and hand-built spreadsheets with one app that goes from the raw instrument file to the finished report.",
       "points": [
-        "Reads Thermo Orbitrap raw files directly, with no manual export",
-        "Optimises MS methods, sequences oligonucleotides, finds impurities and compares batches",
-        "Assigns each observed mass to the most likely impurity within a ppm tolerance, then confirms it with MS2 fragment matching and a confidence label",
+        "Python and Flask app that reads Thermo Orbitrap raw files directly, with no manual export",
+        "Optimises instrument methods, sequences oligonucleotides, finds impurities and compares batches",
+        "Rules-based matching assigns each measured mass to the most likely structure within a ppm tolerance, then checks it against MS2 fragment ions and gives a confidence label",
         "Exports straight to Excel, PDF and PowerPoint",
         "Automated pytest suite, UI and output audit scripts, versioned releases and a standalone Windows build"
       ],
-      "result": "Each analysis takes half the time, so the same team takes on twice the projects.",
+      "result": "Each analysis takes half the time, so the same team takes on twice as many projects.",
       "stack": ["Python", "Flask", "Plotly.js", "RDKit", "pytest", "uv", "PyInstaller", "Claude Code"]
     },
     {
       "id": "fil",
-      "name": "FIL",
-      "expansion": "Fragment Ion Library",
+      "name": "Automated lab data pipeline",
+      "expansion": "In-house tool at GSK, known internally as FIL (Fragment Ion Library)",
       "org": "GSK",
       "years": "2025 to present",
-      "summary": "A scheduled pipeline that finds new experiment records in LabWare and Databricks, pulls the chemical structures and instrument settings out of the attached slide decks, and loads them into a database built for searching.",
-      "result": "Years of fragment records, searchable, with zero manual steps.",
+      "summary": "Runs on a schedule with no one touching it. It picks up new experiments from the lab's records system, pulls the chemical structures and instrument settings out of the attached slide decks, and loads them into a database built for searching.",
+      "points": [
+        "Unattended scheduled job that pulls experiment records from Oracle and Databricks SQL",
+        "Parses the chemical structures embedded in slide decks with RDKit",
+        "Incremental, repeatable loads into a SQLite schema designed for the job, with a Streamlit app for browsing"
+      ],
+      "result": "Years of results that used to sit in slide decks are now searchable, with no manual steps.",
       "stack": ["Python", "Oracle SQL", "Databricks SQL", "RDKit", "SQLite", "Streamlit"]
     },
     {
@@ -116,7 +120,7 @@
       "expansion": "Genomic epidemiology database",
       "org": "University of Warwick",
       "years": "2023 to 2024",
-      "summary": "Built an interactive data visualisation web app for EnteroBase, a public database of bacterial genomes, plus a data pipeline adding new typing schemes for KleTy.",
+      "summary": "Built an interactive web app for exploring data in EnteroBase, a public database of bacterial genomes, and integrated KleTy, an open-source pipeline for typing Klebsiella genomes, into it.",
       "result": "Part of EnteroBase, a public database with more than 4,200 active users.",
       "stack": ["Python", "Flask", "SQLAlchemy", "pandas", "JavaScript", "HTML and CSS"],
       "link": "https://enterobase.warwick.ac.uk/",
@@ -125,16 +129,16 @@
   ],
 
   "savings": {
-    "title": "Hours saved per analysis, by tool",
+    "title": "Hours saved per analysis, by task",
     "max": 20,
     "rows": [
-      { "tool": "Impurity ID", "min": 15, "max": 20 },
-      { "tool": "Comparability", "min": 10, "max": 15 },
-      { "tool": "Optimisation", "min": 10, "max": 15 },
-      { "tool": "Sequencing", "min": 5, "max": 10 },
-      { "tool": "Dimeriser", "min": 5, "max": 5 },
-      { "tool": "Calculator", "min": 1, "max": 5 },
-      { "tool": "FIL", "min": 1, "max": 3 }
+      { "tool": "Identifying impurities", "min": 15, "max": 20 },
+      { "tool": "Comparing batches", "min": 10, "max": 15 },
+      { "tool": "Optimising instrument methods", "min": 10, "max": 15 },
+      { "tool": "Confirming sequences", "min": 5, "max": 10 },
+      { "tool": "Predicting dimer masses", "min": 5, "max": 5 },
+      { "tool": "Calculating masses", "min": 1, "max": 5 },
+      { "tool": "Looking up fragments", "min": 1, "max": 3 }
     ]
   },
 
@@ -145,10 +149,10 @@
       "org": "GSK",
       "location": "Stevenage, UK",
       "points": [
-        "Built MOSAIC and FIL (see Selected work) and own them end to end, from design to release, training and user feedback.",
+        "Built the oligonucleotide analysis platform and the lab data pipeline (see Selected work), and own both from design through release, training and user feedback.",
         "Develop with Claude Code every day; wrote the project instruction files and reusable skills that keep AI-assisted changes consistent and tested.",
-        "Run training sessions and demos helping colleagues adopt AI-assisted development.",
-        "Led a technical collaboration with an external CRO partner and presented at an internal GSK scientific symposium."
+        "Run training sessions and demos that help colleagues get started with AI-assisted development.",
+        "Led a technical collaboration with an external contract research organisation and presented at an internal GSK science symposium."
       ]
     },
     {
@@ -158,7 +162,7 @@
       "location": "Coventry, UK",
       "points": [
         "Built an interactive visualisation web app for EnteroBase, a public genomic epidemiology database with more than 4,200 active users.",
-        "Built a data pipeline for KleTy adding core-genome and plasmid typing schemes, with SQL-driven backups."
+        "Integrated KleTy, an open-source Klebsiella typing pipeline, into EnteroBase, including its core-genome and plasmid typing, with SQL-based backups."
       ]
     },
     {
@@ -285,7 +289,7 @@
   ],
 
   "contact": {
-    "intro": "Open to conversations about scientific software, data engineering and AI-assisted development. The fastest way to reach me is email or LinkedIn.",
+    "intro": "I'm happy to talk about scientific software, data engineering or AI-assisted development. Email or LinkedIn is the quickest way to reach me.",
     "email": "mkrahman9707@gmail.com",
     "mailSubject": "Hello from your website",
     "web3formsKey": "",
