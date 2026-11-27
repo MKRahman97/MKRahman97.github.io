@@ -1,0 +1,298 @@
+{
+  "meta": {
+    "siteTitle": "Mohammed Rahman | Senior Scientist and Python developer at GSK",
+    "brand": "M. K. Rahman",
+    "authorName": "M. Rahman",
+    "showAward": false,
+    "footer": "Mohammed Rahman, Stevenage, UK"
+  },
+
+  "hero": {
+    "firstName": "Mohammed",
+    "lastName": "Rahman",
+    "role": "Senior Scientist at GSK",
+    "pitch": "I build software that takes mass spectrometry data from the raw instrument file to the finished report. I have a PhD in Analytical Science and write production Python every day.",
+    "readout": [
+      { "key": "focus", "value": "Software for oligonucleotide analysis" },
+      { "key": "based", "value": "Stevenage, UK" },
+      { "key": "building", "value": "An analysis app for mass spectrometry data" },
+      { "key": "stack", "value": "Python, Flask, SQL, Plotly, Claude Code" }
+    ],
+    "cvHref": "Images/Mohammed_Rahman_CV.pdf",
+    "cvDownloadName": "Mohammed-Rahman-CV.pdf",
+    "photo": "Images/headshot.jpg",
+    "photoAlt": "Mohammed Rahman"
+  },
+
+  "social": [
+    { "label": "LinkedIn", "href": "https://www.linkedin.com/in/mohammed-k-rahman/", "icon": "bx bxl-linkedin" },
+    { "label": "GitHub", "href": "https://github.com/MKRahman97", "icon": "bx bxl-github" },
+    { "label": "ORCID", "href": "https://orcid.org/0000-0002-5429-1355", "icon": "ai ai-orcid" }
+  ],
+
+  "spectrum": [
+    {
+      "id": "mosaic",
+      "label": "Analysis app",
+      "position": 0.2,
+      "height": 1.0,
+      "summary": "One web app that goes from the raw instrument file to the report: method optimisation, oligonucleotide sequencing, impurity identification and batch comparison.",
+      "awardSummary": "Award-winning web app that goes from the raw instrument file to the report: method optimisation, oligonucleotide sequencing, impurity identification and batch comparison.",
+      "link": "#work-mosaic",
+      "linkText": "Read about the analysis platform"
+    },
+    {
+      "id": "fil",
+      "label": "Pipeline",
+      "position": 0.36,
+      "height": 0.56,
+      "summary": "Runs on a schedule and turns years of fragment data stuck in lab slide decks into a searchable database.",
+      "link": "#work-fil",
+      "linkText": "Read about the pipeline"
+    },
+    {
+      "id": "enterobase",
+      "label": "EnteroBase",
+      "position": 0.53,
+      "height": 0.74,
+      "summary": "Interactive visualisation tools for EnteroBase, a public database of bacterial genomes.",
+      "link": "#work-enterobase",
+      "linkText": "Read about EnteroBase"
+    },
+    {
+      "id": "papers",
+      "label": "Papers",
+      "position": 0.7,
+      "height": 0.55,
+      "summary": "Peer-reviewed papers on oligonucleotide and PROTAC mass spectrometry, NMR polymorph modelling and genomic databases.",
+      "link": "#papers",
+      "linkText": "See the publications"
+    },
+    {
+      "id": "phd",
+      "label": "PhD",
+      "position": 0.85,
+      "height": 0.45,
+      "summary": "PhD in Analytical Science at the University of Warwick: DFT modelling, a scikit-learn structure-prediction model and tandem mass spectrometry.",
+      "link": "#experience",
+      "linkText": "See education"
+    }
+  ],
+
+  "work": [
+    {
+      "id": "mosaic",
+      "name": "Oligonucleotide analysis platform",
+      "expansion": "In-house web app at GSK, known internally as MOSAIC",
+      "org": "GSK",
+      "years": "2025 to present",
+      "featured": true,
+      "award": "GSK award, December 2026",
+      "summary": "A web app GSK's mass spectrometry scientists use to check the quality of oligonucleotide medicines (drugs made from short strands of DNA or RNA). Built to replace a mix of software packages, calculators and hand-built spreadsheets with one app that goes from the raw instrument file to the finished report.",
+      "points": [
+        "Python and Flask app that reads Thermo Orbitrap raw files directly, with no manual export",
+        "Optimises instrument methods, sequences oligonucleotides, finds impurities and compares batches",
+        "Rules-based matching assigns each measured mass to the most likely structure within a ppm tolerance, then checks it against MS2 fragment ions and gives a confidence label",
+        "Exports straight to Excel, PDF and PowerPoint",
+        "Automated pytest suite, UI and output audit scripts, versioned releases and a standalone Windows build"
+      ],
+      "result": "Each analysis takes half the time, so the same team takes on twice as many projects.",
+      "stack": ["Python", "Flask", "Plotly.js", "RDKit", "pytest", "uv", "PyInstaller", "Claude Code"]
+    },
+    {
+      "id": "fil",
+      "name": "Automated lab data pipeline",
+      "expansion": "In-house tool at GSK, known internally as FIL (Fragment Ion Library)",
+      "org": "GSK",
+      "years": "2025 to present",
+      "summary": "Runs on a schedule with no one touching it. It picks up new experiments from the lab's records system, pulls the chemical structures and instrument settings out of the attached slide decks, and loads them into a database built for searching.",
+      "points": [
+        "Unattended scheduled job that pulls experiment records from Oracle and Databricks SQL",
+        "Parses the chemical structures embedded in slide decks with RDKit",
+        "Incremental, repeatable loads into a SQLite schema designed for the job, with a Streamlit app for browsing"
+      ],
+      "result": "Years of results that used to sit in slide decks are now searchable, with no manual steps.",
+      "stack": ["Python", "Oracle SQL", "Databricks SQL", "RDKit", "SQLite", "Streamlit"]
+    },
+    {
+      "id": "enterobase",
+      "name": "EnteroBase",
+      "expansion": "Genomic epidemiology database",
+      "org": "University of Warwick",
+      "years": "2023 to 2024",
+      "summary": "Built an interactive web app for exploring data in EnteroBase, a public database of bacterial genomes, and integrated KleTy, an open-source pipeline for typing Klebsiella genomes, into it.",
+      "result": "Part of EnteroBase, a public database with more than 4,200 active users.",
+      "stack": ["Python", "Flask", "SQLAlchemy", "pandas", "JavaScript", "HTML and CSS"],
+      "link": "https://enterobase.warwick.ac.uk/",
+      "linkText": "Visit EnteroBase"
+    }
+  ],
+
+  "savings": {
+    "title": "Hours saved per analysis, by task",
+    "max": 20,
+    "rows": [
+      { "tool": "Identifying impurities", "min": 15, "max": 20 },
+      { "tool": "Comparing batches", "min": 10, "max": 15 },
+      { "tool": "Optimising instrument methods", "min": 10, "max": 15 },
+      { "tool": "Confirming sequences", "min": 5, "max": 10 },
+      { "tool": "Predicting dimer masses", "min": 5, "max": 5 },
+      { "tool": "Calculating masses", "min": 1, "max": 5 },
+      { "tool": "Looking up fragments", "min": 1, "max": 3 }
+    ]
+  },
+
+  "experience": [
+    {
+      "years": "2024 to present",
+      "role": "Senior Scientist",
+      "org": "GSK",
+      "location": "Stevenage, UK",
+      "points": [
+        "Built the oligonucleotide analysis platform and the lab data pipeline (see Selected work), and own both from design through release, training and user feedback.",
+        "Develop with Claude Code every day; wrote the project instruction files and reusable skills that keep AI-assisted changes consistent and tested.",
+        "Run training sessions and demos that help colleagues get started with AI-assisted development.",
+        "Led a technical collaboration with an external contract research organisation and presented at an internal GSK science symposium."
+      ]
+    },
+    {
+      "years": "2023 to 2024",
+      "role": "Bioinformatician",
+      "org": "Bioinformatics Research Technology Platform, University of Warwick",
+      "location": "Coventry, UK",
+      "points": [
+        "Built an interactive visualisation web app for EnteroBase, a public genomic epidemiology database with more than 4,200 active users.",
+        "Integrated KleTy, an open-source Klebsiella typing pipeline, into EnteroBase, including its core-genome and plasmid typing, with SQL-based backups."
+      ]
+    },
+    {
+      "years": "2017 to 2018",
+      "role": "Laboratory Technician",
+      "org": "Analytical Services International",
+      "location": "London, UK",
+      "points": [
+        "Ran bioanalytical assays on clinical study samples and quality-checked the data; co-authored a published method."
+      ]
+    }
+  ],
+
+  "education": [
+    {
+      "years": "2020 to 2023",
+      "degree": "PhD, Analytical Science",
+      "org": "University of Warwick",
+      "note": "DFT modelling of drug molecules, a scikit-learn structure-prediction model, and tandem mass spectrometry of oligonucleotides and PROTACs."
+    },
+    {
+      "years": "2019 to 2020",
+      "degree": "MSc, Analytical Science, with Distinction",
+      "org": "University of Warwick"
+    },
+    {
+      "years": "2015 to 2019",
+      "degree": "BSc, Chemistry, First Class Honours",
+      "org": "University of Surrey"
+    }
+  ],
+
+  "paperTopics": [
+    { "id": "all", "label": "All" },
+    { "id": "mass-spectrometry", "label": "Mass spectrometry" },
+    { "id": "software-data", "label": "Software and data" },
+    { "id": "other", "label": "Other science" }
+  ],
+
+  "publications": [
+    {
+      "year": 2025,
+      "title": "Investigating Cell Wall Diffusion in Wood Modified with Phenol Urea Formaldehyde Resin in Different Length Scales",
+      "authors": "C. Kupfernagel, M. Rahman, R. Cresswell, M. J. Spear, A. Pitman, S. P. Brown, G. A. Ormondroyd",
+      "journal": "Biomacromolecules",
+      "volume": "26(2), 900–913",
+      "doi": "10.1021/acs.biomac.4c01168",
+      "topic": "other",
+      "firstAuthor": false
+    },
+    {
+      "year": 2025,
+      "title": "EnteroBase in 2025: exploring the genomic epidemiology of bacterial pathogens",
+      "authors": "N. P. Dyer, B. Päuker, L. Baxter, A. Gupta, B. Bunk, J. Overmann, M. Diricks, V. Dreyer, S. Niemann, K. E. Holt, M. Rahman, P. E. Brown, R. Stark, Z. Zhou, S. Ott, U. Nübel",
+      "journal": "Nucleic Acids Research",
+      "volume": "53(D1), D757–D762",
+      "doi": "10.1093/nar/gkae902",
+      "topic": "software-data",
+      "firstAuthor": false
+    },
+    {
+      "year": 2024,
+      "title": "Unveiling the intricacy of gapmer oligonucleotides through advanced tandem mass spectrometry approaches and scan accumulation for 2DMS",
+      "authors": "M. Rahman, B. P. Marzullo, P. Y. Lam, M. P. Barrow, S. W. Holman, A. D. Ray, P. B. O'Connor",
+      "journal": "Analyst",
+      "volume": "149(18), 4687–4701",
+      "doi": "10.1039/D4AN00484A",
+      "topic": "mass-spectrometry",
+      "firstAuthor": true
+    },
+    {
+      "year": 2024,
+      "title": "Polymorph Identification for Flexible Molecules: Linear Regression Analysis of Experimental and Calculated Solution- and Solid-State NMR Data",
+      "authors": "M. Rahman, H. R. W. Dannatt, C. D. Blundell, L. P. Hughes, H. Blade, J. Carson, B. P. Tatman, S. T. Johnston, S. P. Brown",
+      "journal": "The Journal of Physical Chemistry A",
+      "volume": "128(10), 1793–1816",
+      "doi": "10.1021/acs.jpca.3c07732",
+      "topic": "software-data",
+      "firstAuthor": true
+    },
+    {
+      "year": 2024,
+      "title": "Advancing PROTAC Characterization: Structural Insights through Adducts and Multimodal Tandem-MS Strategies",
+      "authors": "M. Rahman, B. P. Marzullo, S. W. Holman, M. P. Barrow, A. D. Ray, P. B. O'Connor",
+      "journal": "Journal of the American Society for Mass Spectrometry",
+      "volume": "35(2), 285–299",
+      "doi": "10.1021/jasms.3c00342",
+      "topic": "mass-spectrometry",
+      "firstAuthor": true
+    },
+    {
+      "year": 2019,
+      "title": "Rapid Quantitation of Flecainide in Human Plasma for Therapeutic Drug Monitoring Using Liquid Chromatography and Time-of-Flight Mass Spectrometry",
+      "authors": "M. Rahman, L. Couchman, V. Povstyan, V. Bainbridge, K. Kipper, T. El-Nahhas, A. Johnston, D. Holt",
+      "journal": "Therapeutic Drug Monitoring",
+      "volume": "41(3), 391–395",
+      "doi": "10.1097/FTD.0000000000000586",
+      "topic": "mass-spectrometry",
+      "firstAuthor": true
+    }
+  ],
+
+  "skills": [
+    {
+      "group": "Backend and software engineering",
+      "items": ["Python", "Flask", "FastAPI", "SQLAlchemy", "pandas", "pytest", "git and GitHub", "GitHub Actions", "Docker", "uv", "PyInstaller"]
+    },
+    {
+      "group": "Data pipelines and cloud",
+      "items": ["SQL", "Oracle", "Databricks SQL", "SQLite schema design", "Scheduled ETL jobs", "Azure", "AWS"]
+    },
+    {
+      "group": "AI-assisted development",
+      "items": ["Claude Code", "Project instruction files", "Reusable skills and review checks", "Training colleagues"]
+    },
+    {
+      "group": "Front-end",
+      "items": ["JavaScript", "Plotly.js", "HTML", "CSS", "Streamlit"]
+    },
+    {
+      "group": "Science and statistics",
+      "items": ["Mass spectrometry", "Oligonucleotides", "RDKit", "scikit-learn", "Bayesian and frequentist statistics", "DFT modelling", "R"]
+    }
+  ],
+
+  "contact": {
+    "intro": "I'm happy to talk about scientific software, data engineering or AI-assisted development. Email or LinkedIn is the quickest way to reach me.",
+    "email": "mkrahman9707@gmail.com",
+    "mailSubject": "Hello from your website",
+    "web3formsKey": "",
+    "formSubject": "New message from mkrahman97.github.io"
+  }
+}
