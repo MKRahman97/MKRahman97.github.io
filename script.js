@@ -310,32 +310,6 @@ function renderSpectrum(peaks, showAward) {
 
 // ── Work ──────────────────────────────────────────────────────────────────────
 
-function renderSavings(savings) {
-    const fig = el('figure', { class: 'savings' });
-    fig.appendChild(el('figcaption', { text: savings.title }));
-    const list = el('ul', { class: 'savings-rows' });
-    savings.rows.forEach(row => {
-        const range = row.min === row.max ? `${row.min} h` : `${row.min} to ${row.max} h`;
-        const left = (row.min / savings.max) * 100;
-        const width = Math.max(((row.max - row.min) / savings.max) * 100, 1.6);
-        const bar = el('span', { class: 'savings-bar' });
-        bar.style.left = left + '%';
-        bar.style.width = width + '%';
-        list.appendChild(el('li', null, [
-            el('span', { class: 'visually-hidden', text: `${row.tool}: ${range} saved per analysis` }),
-            el('span', { class: 'savings-tool', text: row.tool, 'aria-hidden': 'true' }),
-            el('span', { class: 'savings-track', 'aria-hidden': 'true' }, [bar]),
-            el('span', { class: 'savings-value', text: range, 'aria-hidden': 'true' })
-        ]));
-    });
-    fig.appendChild(list);
-    const scale = el('div', { class: 'savings-scale', 'aria-hidden': 'true' }, [
-        el('span', { text: '0 h' }), el('span', { text: (savings.max / 2) + ' h' }), el('span', { text: savings.max + ' h' })
-    ]);
-    fig.appendChild(scale);
-    return fig;
-}
-
 function renderWork(data) {
     const container = document.getElementById('work-list');
     container.innerHTML = '';
@@ -361,9 +335,7 @@ function renderWork(data) {
             ]));
         }
 
-        const article = el('article', { class: 'work-item' + (item.featured ? ' featured' : ''), id: 'work-' + item.id }, [head, body]);
-        if (item.featured && data.savings) article.appendChild(renderSavings(data.savings));
-        container.appendChild(article);
+        container.appendChild(el('article', { class: 'work-item' + (item.featured ? ' featured' : ''), id: 'work-' + item.id }, [head, body]));
     });
 }
 

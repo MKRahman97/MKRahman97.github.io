@@ -34,7 +34,6 @@ hero:        firstName, lastName, role, pitch, readout[{key,value}], cvHref, cvD
 social:      [{ label, href, icon }]          icon = full class string, e.g. "bx bxl-linkedin" or "ai ai-orcid"
 spectrum:    [{ id, label, position 0-1, height 0-1, summary, awardSummary?, link, linkText }]
 work:        [{ id, name, expansion, org, years, featured?, award?, summary, points?, result, stack[], link?, linkText? }]
-savings:     { title, max, rows[{ tool, min, max }] }   hours-saved chart inside the featured work item
 experience:  [{ years, role, org, location, points[] }]
 education:   [{ years, degree, org, note? }]
 paperTopics: [{ id, label }]                   filter chips; "all" plus topic ids used below

@@ -128,20 +128,6 @@
     }
   ],
 
-  "savings": {
-    "title": "Hours saved per analysis, by task",
-    "max": 20,
-    "rows": [
-      { "tool": "Identifying impurities", "min": 15, "max": 20 },
-      { "tool": "Comparing batches", "min": 10, "max": 15 },
-      { "tool": "Optimising instrument methods", "min": 10, "max": 15 },
-      { "tool": "Confirming sequences", "min": 5, "max": 10 },
-      { "tool": "Predicting dimer masses", "min": 5, "max": 5 },
-      { "tool": "Calculating masses", "min": 1, "max": 5 },
-      { "tool": "Looking up fragments", "min": 1, "max": 3 }
-    ]
-  },
-
   "experience": [
     {
       "years": "2024 to present",
